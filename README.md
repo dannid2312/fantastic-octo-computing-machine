@@ -43,9 +43,7 @@ Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yan
 ### Variabel-variabel pada Car Price Prediction dataset adalah sebagai berikut:
 #### Numerical Features:
 - model : nama spesifik dari model mobil yang dikeluarkan oleh brand tertentu
-- year : tahun pembuatan mobil, terdapat 2 data outlier yaitu tahun 1970 dan 2060, yang kemudian dihilangkan pada tahap data cleansing
-![year](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/f652aacc-c24a-4182-a427-b787dac8a1b2)
-
+- year : tahun pembuatan mobil, terdapat 2 data outlier yaitu tahun 1970 dan 2060, yang kemudian dihilangkan pada tahap data cleansing  ![year](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/f652aacc-c24a-4182-a427-b787dac8a1b2)
 - price : merupakan kolom target dalam melakukan modelling machine learning yang menyatakan harga dalam mobil bekas dalam satuan GBP, dalam proyek kali ini akan diubah ke IDR dengan nilai konversi 1 GBP = 20000 IDR
 - transmission : tipe transmisi dari mobil bekas, terdiri dari automatic, manual, triptonic, dan lainnya
 - mileage : jarak yang telah ditempuh oleh mobil bekas dalam satuan mile diubah menjadi satuan km dengan konversi 1 mile = 1.6 km
