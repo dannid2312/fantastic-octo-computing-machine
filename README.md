@@ -38,12 +38,14 @@ Untuk mencapai tujuan atau goals tersebut, dilakukan beberapa tahapan sebagai be
 
 ## Data Understanding
 
-Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/adityadesai13/used-car-dataset-ford-and-mercedes/data). Dataset ini memiliki 108540 baris dan terdiri dari 10 kolom yaitu model, year, price, transmission, mileage, fuelType, tax, mpg, engineSize, dan brand. Dataset masih perlu dilakukan beberapa penyesuaian berupa data cleansing dan data preparation untuk menghasilkan dataset yang berkualitas.
+Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/adityadesai13/used-car-dataset-ford-and-mercedes/data). Dataset ini memiliki 108540 baris dan terdiri dari 10 kolom yaitu model, year, price, transmission, mileage, fuelType, tax, mpg, engineSize, dan brand. Dataset masih perlu dilakukan beberapa penyesuaian berupa data cleansing dan data preparation untuk menghasilkan dataset yang berkualitas. Beberapa baris dataset dihilangkan karena terdapat kolom yang kosong, serta dihilangkan data-data yang merupakan outlier, sehingga menghasilkan data akhir yang dilanjutkan pada tahap permodelan sebanyak 65039 baris.
 
 ### Variabel-variabel pada Car Price Prediction dataset adalah sebagai berikut:
+#### Numerical Features:
 - model : nama spesifik dari model mobil yang dikeluarkan oleh brand tertentu
-- year : tahun pembuatan mobil
-![image](https://drive.usercontent.google.com/download?id=1hDAUJyjIuH9iSxJkNqtyyC4X7FOQNIC-&export=view)
+- year : tahun pembuatan mobil, terdapat 2 data outlier yaitu tahun 1970 dan 2060, yang kemudian dihilangkan pada tahap data cleansing
+![year](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/f652aacc-c24a-4182-a427-b787dac8a1b2)
+
 - price : merupakan kolom target dalam melakukan modelling machine learning yang menyatakan harga dalam mobil bekas dalam satuan GBP, dalam proyek kali ini akan diubah ke IDR dengan nilai konversi 1 GBP = 20000 IDR
 - transmission : tipe transmisi dari mobil bekas, terdiri dari automatic, manual, triptonic, dan lainnya
 - mileage : jarak yang telah ditempuh oleh mobil bekas dalam satuan mile diubah menjadi satuan km dengan konversi 1 mile = 1.6 km
