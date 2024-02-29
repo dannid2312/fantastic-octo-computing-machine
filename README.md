@@ -42,7 +42,8 @@ Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yan
 
 ### Variabel-variabel pada Car Price Prediction dataset adalah sebagai berikut:
 - model : nama spesifik dari model mobil yang dikeluarkan oleh brand tertentu
-- year : tahun pembuatan mobil ![image](https://drive.usercontent.google.com/download?id=1hDAUJyjIuH9iSxJkNqtyyC4X7FOQNIC-&export=view)
+- year : tahun pembuatan mobil
+![image](https://drive.usercontent.google.com/download?id=1hDAUJyjIuH9iSxJkNqtyyC4X7FOQNIC-&export=view)
 - price : merupakan kolom target dalam melakukan modelling machine learning yang menyatakan harga dalam mobil bekas dalam satuan GBP, dalam proyek kali ini akan diubah ke IDR dengan nilai konversi 1 GBP = 20000 IDR
 - transmission : tipe transmisi dari mobil bekas, terdiri dari automatic, manual, triptonic, dan lainnya
 - mileage : jarak yang telah ditempuh oleh mobil bekas dalam satuan mile diubah menjadi satuan km dengan konversi 1 mile = 1.6 km
