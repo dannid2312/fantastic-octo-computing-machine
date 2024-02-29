@@ -43,9 +43,9 @@ Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yan
 ### Variabel-variabel pada Car Price Prediction dataset adalah sebagai berikut:
 #### Variabel yang termasuk ke dalam categorical features terdiri diri:
 - model : nama spesifik dari model mobil yang dikeluarkan oleh brand tertentu
-- transmission : tipe transmisi dari mobil bekas, terdiri dari automatic, manual, triptonic, dan lainnya
-- fuelType : jenis bahan bakar yang digunakan oleh mobil bekas
-- brand : perusahaan atau brand yang memproduksi mobil
+- transmission : tipe transmisi dari mobil bekas, terdiri dari automatic, manual, semi-auto, dan lainnya <br> ![trans](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/50e14533-a458-4a7e-9818-66e5a1662ab3)
+- fuelType : jenis bahan bakar yang digunakan oleh mobil bekas <br> ![fuel](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/2bbc1959-6eb3-4d50-9fa7-020063e7fe20)
+- brand : perusahaan atau brand yang memproduksi mobil <br> ![brand](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/5bd6cd37-d67f-47ef-86b7-e34d8d99c3c3)
 
 #### Variabel yang termasuk ke dalam numerical features terdiri diri:
 - year : tahun pembuatan mobil, terdapat 2 data outlier yaitu tahun 1970 dan 2060, yang kemudian dihilangkan pada tahap data cleansing  <br> ![year](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/f652aacc-c24a-4182-a427-b787dac8a1b2)
@@ -55,8 +55,11 @@ Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yan
 - mpg : menunjukkan efisiensi mobil untuk bergerak berapa mile per gallon, untuk menyesuaikan pasar indonesia, dikonversi 1 mpg = 0.425 km per liter <br> ![mpg](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/cda2ee47-11f1-4388-9575-22bb31bec2b5)
 - engineSize : volume mesin dalam satuan Liter atau 1000 cc <br> ![engine](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/029b3ecd-ef04-4500-a179-ef9e925acf54)
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
+### Perbandingan variabel-variabel terhadap variabel target 'price'
+- Perbandingan rata-rata price terhadap model menunjukkan data yang variatif, karena setiap model memiliki penamaan yang berbeda berdasarkan brand masing-masing, sehingga tidak dapat diambil kesimpulan pengaruh model terhadap kolom target price. <br> ![model-price](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/1fd76878-9542-4df0-85ce-ae4a5b343400)
+- Perbandingan rata-rata price terhadap transmission menunjukkan bahwa harga mobil dengan transmisi automatic atau semi-auto memiliki harga lebih tinggi daripada mobil dengan transmisi manual. Hal tersebut sesuai karena spare part untuk membuat transmisi automatic atau semi-auto memang lebih mahal dan canggih dibandingkan transmisi manual. <br> ![price-trans](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/c1cbae2e-bfbb-4a16-9ee2-43342aedc1da)
+- Perbandingan rata-rata price terhadap fuelType menunjukkan bahwa harga mobil yang menggunakan bahan bakar diesel atau hybrid lebih mahal dibandingkan mobil yang menggunakan bahan bakar bensin.
+
 
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
