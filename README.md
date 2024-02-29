@@ -41,17 +41,19 @@ Untuk mencapai tujuan atau goals tersebut, dilakukan beberapa tahapan sebagai be
 Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/adityadesai13/used-car-dataset-ford-and-mercedes/data). Dataset ini memiliki 108540 baris dan terdiri dari 10 kolom yaitu model, year, price, transmission, mileage, fuelType, tax, mpg, engineSize, dan brand. Dataset masih perlu dilakukan beberapa penyesuaian berupa data cleansing dan data preparation untuk menghasilkan dataset yang berkualitas. Beberapa baris dataset dihilangkan karena terdapat kolom yang kosong, serta dihilangkan data-data yang merupakan outlier, sehingga menghasilkan data akhir yang dilanjutkan pada tahap permodelan sebanyak 65039 baris.
 
 ### Variabel-variabel pada Car Price Prediction dataset adalah sebagai berikut:
-#### Numerical Features:
+#### Variabel yang termasuk ke dalam categorical features terdiri diri:
 - model : nama spesifik dari model mobil yang dikeluarkan oleh brand tertentu
-- year : tahun pembuatan mobil, terdapat 2 data outlier yaitu tahun 1970 dan 2060, yang kemudian dihilangkan pada tahap data cleansing  <br> ![year](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/f652aacc-c24a-4182-a427-b787dac8a1b2)
-- price : merupakan kolom target dalam melakukan modelling machine learning yang menyatakan harga dalam mobil bekas dalam satuan GBP, dalam proyek kali ini akan diubah ke IDR dengan nilai konversi 1 GBP = 20000 IDR
 - transmission : tipe transmisi dari mobil bekas, terdiri dari automatic, manual, triptonic, dan lainnya
-- mileage : jarak yang telah ditempuh oleh mobil bekas dalam satuan mile diubah menjadi satuan km dengan konversi 1 mile = 1.6 km
 - fuelType : jenis bahan bakar yang digunakan oleh mobil bekas
-- tax : nilai pajak terkait dengan administrasi mobil bekas dalam satuan GBP, dalam proyek kali ini akan diubah ke IDR dengan nilai konversi 1 GBP = 20000 IDR
-- mpg : menunjukkan efisiensi mobil untuk bergerak berapa mile per gallon, untuk menyesuaikan pasar indonesia, dikonversi 1 mpg = 0.425 km per liter
-- engineSize : volume mesin dalam satuan Liter atau 1000 cc
 - brand : perusahaan atau brand yang memproduksi mobil
+
+#### Variabel yang termasuk ke dalam numerical features terdiri diri:
+- year : tahun pembuatan mobil, terdapat 2 data outlier yaitu tahun 1970 dan 2060, yang kemudian dihilangkan pada tahap data cleansing  <br> ![year](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/f652aacc-c24a-4182-a427-b787dac8a1b2)
+- price : merupakan kolom target dalam melakukan modelling machine learning yang menyatakan harga dalam mobil bekas dalam satuan GBP, dalam proyek kali ini akan diubah ke IDR dengan nilai konversi 1 GBP = 20000 IDR <br> ![price](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/02a210a5-ada8-4031-9563-9c2c74a0dc81)
+- mileage : jarak yang telah ditempuh oleh mobil bekas dalam satuan mile diubah menjadi satuan km dengan konversi 1 mile = 1.6 km <br> ![mileage](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/9c2df07b-af5e-4487-9807-b247f3df132a)
+- tax : nilai pajak terkait dengan administrasi mobil bekas dalam satuan GBP, dalam proyek kali ini akan diubah ke IDR dengan nilai konversi 1 GBP = 20000 IDR <br> ![tax](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/5f109719-a6e3-488a-aefe-52f02ff7b008)
+- mpg : menunjukkan efisiensi mobil untuk bergerak berapa mile per gallon, untuk menyesuaikan pasar indonesia, dikonversi 1 mpg = 0.425 km per liter <br> ![mpg](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/cda2ee47-11f1-4388-9575-22bb31bec2b5)
+- engineSize : volume mesin dalam satuan Liter atau 1000 cc <br> ![engine](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/029b3ecd-ef04-4500-a179-ef9e925acf54)
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
