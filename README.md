@@ -78,13 +78,10 @@ Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
 Untuk melakukan proses encoding fitur kategori, salah satu teknik yang umum dilakukan adalah teknik one-hot-encoding. Library scikit-learn menyediakan fungsi ini untuk mendapatkan fitur baru yang sesuai sehingga dapat mewakili variabel kategori. Dataset memiliki empat variabel kategori, yaitu model, transmission, fuelType, dan brand. Proses encoding dilakukan dengan fitur get_dummies. Proses encoding dilakukan untuk mengubah variabel menjadi nilai numerik sehingga lebih mudah diproses oleh model.
 
 ### Pembagian dataset dengan fungsi train_test_split dari library sklearn
-
+Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dilatih (train) pada model dan dataset untuk menguji (test) performa model. Dalam project ini akan digunakan proporsi pembagian sebesar 90:10 dengan fungsi train_test_split dari sklearn. Pembagian data latih (train) dan data uji (test) perlu dilakukan untuk melakukan transformasi terpisah pada masing-masing dataset. Transformasi terpisah dilakukan agar tidak terjadi kebocoran data uji (test) saat melatih model dengan data latih (train).
 
 ### Standarisasi
-
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+Algoritma machine learning memiliki performa lebih baik dan konvergen lebih cepat ketika dimodelkan pada data dengan skala relatif sama atau mendekati distribusi normal. Proses scaling dan standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. Dalam proyek ini standarisasi dilakukan dengan menggunakan teknik StandarScaler dari library Scikitlearn. StandardScaler melakukan proses standarisasi fitur dengan mengurangkan mean (nilai rata-rata) kemudian membaginya dengan standar deviasi untuk menggeser distribusi. Penerapan standarisasi dengan StandardScaler dilakukan secara terpisah pada masing-masing dataset latih (train) dan dataset uji (test).
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
