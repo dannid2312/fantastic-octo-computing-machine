@@ -69,10 +69,18 @@ Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yan
 - Korelasi antar engineSize dengan kolom target price sebesar 0.59 menunjukkan bahwa semakin besar kapasitas mesin, maka semakin mahal harga mobil bekasnya.
 <br> ![price-numvar](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/4c3bd10c-bcaf-482f-a172-4b299d12b65f) <br>
 
-Berdasarkan uraian diatas, disimpulkan bahwa dataset memiliki korelasi yang bersesuaian dengan fakta di lapangan, dimana harga mobil bekas berkorelasi positif dengan tahun pembuatan (year), pajak (tax), dan kapasitas mesin (engineSize), sedangkan jarak tempuh (mileage) dan konsumsi bahan bakar (mpg) memiliki korelasi negatif. Variabel yang berkontribusi besar terhadap harga mobil bekas adalah tahun pembuatan (year) dan kapasitas mesin (engineSize), sedangkan variabel yang memberikan pengaruh paling kecil adalah nilai pajak (tax).
+Berdasarkan uraian diatas, disimpulkan bahwa dataset memiliki korelasi yang bersesuaian dengan fakta di lapangan, dimana harga mobil bekas berkorelasi positif dengan tahun pembuatan (year), pajak (tax), dan kapasitas mesin (engineSize), sedangkan jarak tempuh (mileage) dan konsumsi bahan bakar (mpg) memiliki korelasi negatif terhadap harga mobil bekas. Variabel yang berkontribusi besar terhadap harga mobil bekas adalah kapasitas mesin (engineSize) kemudian tahun pembuatan (year). Variabel yang memberikan kontribusi paling kecil adalah nilai pajak (tax), sehingga kolom tax akan dihilangkan dari dataset dalam melakukan permodelan.
 
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
+
+### Encoding fitur kategori
+Untuk melakukan proses encoding fitur kategori, salah satu teknik yang umum dilakukan adalah teknik one-hot-encoding. Library scikit-learn menyediakan fungsi ini untuk mendapatkan fitur baru yang sesuai sehingga dapat mewakili variabel kategori. Dataset memiliki empat variabel kategori, yaitu model, transmission, fuelType, dan brand. Proses encoding dilakukan dengan fitur get_dummies. Proses encoding dilakukan untuk mengubah variabel menjadi nilai numerik sehingga lebih mudah diproses oleh model.
+
+### Pembagian dataset dengan fungsi train_test_split dari library sklearn
+
+
+### Standarisasi
 
 **Rubrik/Kriteria Tambahan (Opsional)**: 
 - Menjelaskan proses data preparation yang dilakukan
