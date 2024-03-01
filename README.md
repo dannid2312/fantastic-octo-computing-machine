@@ -76,6 +76,12 @@ Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
 
 ### Encoding fitur kategori
 Untuk melakukan proses encoding fitur kategori, salah satu teknik yang umum dilakukan adalah teknik one-hot-encoding. Library scikit-learn menyediakan fungsi ini untuk mendapatkan fitur baru yang sesuai sehingga dapat mewakili variabel kategori. Dataset memiliki empat variabel kategori, yaitu model, transmission, fuelType, dan brand. Proses encoding dilakukan dengan fitur get_dummies. Proses encoding dilakukan untuk mengubah variabel menjadi nilai numerik sehingga lebih mudah diproses oleh model.
+```
+from sklearn.preprocessing import  OneHotEncoder
+for col in categorical_features:
+  df = pd.concat([df, pd.get_dummies(df[col], prefix=col)],axis=1)
+df.drop(categorical_features, axis=1, inplace=True)
+```
 
 ### Pembagian dataset dengan fungsi train_test_split dari library sklearn
 Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dilatih (train) pada model dan dataset untuk menguji (test) performa model. Dalam project ini akan digunakan proporsi pembagian sebesar 80:20 dengan fungsi train_test_split dari sklearn. Pembagian data latih (train) dan data uji (test) perlu dilakukan untuk melakukan transformasi terpisah pada masing-masing dataset. Transformasi terpisah dilakukan agar tidak terjadi kebocoran data uji (test) saat melatih model dengan data latih (train).
