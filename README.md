@@ -55,11 +55,21 @@ Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yan
 - mpg : menunjukkan efisiensi mobil untuk bergerak berapa mile per gallon, untuk menyesuaikan pasar indonesia, dikonversi 1 mpg = 0.425 km per liter <br> ![mpg](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/cda2ee47-11f1-4388-9575-22bb31bec2b5)
 - engineSize : volume mesin dalam satuan Liter atau 1000 cc <br> ![engine](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/029b3ecd-ef04-4500-a179-ef9e925acf54)
 
-### Perbandingan variabel-variabel terhadap variabel target 'price'
+### Perbandingan categorical features terhadap kolom target 'price'
 - Perbandingan rata-rata price terhadap model menunjukkan data yang variatif, karena setiap model memiliki penamaan yang berbeda berdasarkan brand masing-masing, sehingga tidak dapat diambil kesimpulan pengaruh model terhadap kolom target price. <br> ![model-price](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/1fd76878-9542-4df0-85ce-ae4a5b343400)
 - Perbandingan rata-rata price terhadap transmission menunjukkan bahwa harga mobil dengan transmisi automatic atau semi-auto memiliki harga lebih tinggi daripada mobil dengan transmisi manual. Hal tersebut sesuai karena spare part untuk membuat transmisi automatic atau semi-auto memang lebih mahal dan canggih dibandingkan transmisi manual. <br> ![price-trans](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/c1cbae2e-bfbb-4a16-9ee2-43342aedc1da)
-- Perbandingan rata-rata price terhadap fuelType menunjukkan bahwa harga mobil yang menggunakan bahan bakar diesel atau hybrid lebih mahal dibandingkan mobil yang menggunakan bahan bakar bensin.
+- Perbandingan rata-rata price terhadap fuelType menunjukkan bahwa harga mobil yang menggunakan bahan bakar diesel atau hybrid lebih mahal dibandingkan mobil yang menggunakan bahan bakar bensin. <br> ![price-fuel](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/d7d6240c-486a-41d7-aedb-d95f15bf149b)
+- Perbandingan rata-rata price terhadap brand menunjukkan bahwa harga mobil mercedes, bmw, dan audi, cenderung memiliki harga lebih mahal dibandingkan merek mobil lainnya. <br> ![price-brand](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/604b8a66-997e-4b6b-b83f-08f31cf50ebe)
 
+### Perbandingan numerical features terhadap kolom target 'price'
+- Korelasi antara year dengan kolom target price sebesar 0.48 menunjukkan bahwa semakin besar nilai tahun atau semakin muda umur mobil bekas, maka harga mobil bekasnya semakin mahal.
+- Korelasi antara mileage dengan kolom target price sebesar -0.39 menunjukkan bahwa semakin besar jarak yang sudah ditempuh, maka harga mobil bekas semakin murah.
+- Korelasi antara tax dengan kolom target price sebesar 0.12 menunjukkan korelasi positif namun tidak terlalu signifikan terhadap harga mobil bekas.
+- korelasi antara mpg dengan kolom target price sebesar -0.32 menunjukkan bahwa semakin besar atau semakin hemat kebutuhan bahan bakarnya, maka harga mobil bekas semakin mahal.
+- Korelasi antar engineSize dengan kolom target price sebesar 0.59 menunjukkan bahwa semakin besar kapasitas mesin, maka semakin mahal harga mobil bekasnya.
+<br> ![price-numvar](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/4c3bd10c-bcaf-482f-a172-4b299d12b65f) <br>
+
+Berdasarkan uraian diatas, disimpulkan bahwa dataset memiliki korelasi yang bersesuaian dengan fakta di lapangan, dimana harga mobil bekas berkorelasi positif dengan tahun pembuatan (year), pajak (tax), dan kapasitas mesin (engineSize), sedangkan jarak tempuh (mileage) dan konsumsi bahan bakar (mpg) memiliki korelasi negatif. Variabel yang berkontribusi besar terhadap harga mobil bekas adalah tahun pembuatan (year) dan kapasitas mesin (engineSize), sedangkan variabel yang memberikan pengaruh paling kecil adalah nilai pajak (tax).
 
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
