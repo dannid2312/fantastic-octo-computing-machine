@@ -85,21 +85,51 @@ df.drop(categorical_features, axis=1, inplace=True)
 
 ### Pembagian dataset dengan fungsi train_test_split dari library sklearn
 Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dilatih (train) pada model dan dataset untuk menguji (test) performa model. Dalam project ini akan digunakan proporsi pembagian sebesar 80:20 dengan fungsi train_test_split dari sklearn. Pembagian data latih (train) dan data uji (test) perlu dilakukan untuk melakukan transformasi terpisah pada masing-masing dataset. Transformasi terpisah dilakukan agar tidak terjadi kebocoran data uji (test) saat melatih model dengan data latih (train).
+```
+from sklearn.model_selection import train_test_split
+X = df.drop(["price"],axis =1)
+y = df["price"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 123)
+```
 
 ### Standarisasi
 Algoritma machine learning memiliki performa lebih baik dan konvergen lebih cepat ketika dimodelkan pada data dengan skala relatif sama atau mendekati distribusi normal. Proses scaling dan standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. Dalam proyek ini standarisasi dilakukan dengan menggunakan teknik StandarScaler dari library Scikitlearn. StandardScaler melakukan proses standarisasi fitur dengan mengurangkan mean (nilai rata-rata) kemudian membaginya dengan standar deviasi untuk menggeser distribusi. Penerapan standarisasi dengan StandardScaler dilakukan secara terpisah pada masing-masing dataset latih (train) dan dataset uji (test).
+```
+numerical_features = ['year', 'mileage', 'mpg', 'engineSize']
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+scaler.fit(X_train[numerical_features])
+X_train[numerical_features] = scaler.transform(X_train.loc[:, numerical_features])
+X_train[numerical_features].head()
+```
 
 ## Modeling
 Pada proyek ini, model machine learning yang digunakan adalah dengan tiga algoritma. Performa masing-masing algoritma akan dilakukan evaluasi untuk menentukan algoritma mana yang memberikan hasil prediksi terbaik. Ketiga algoritma yang akan digunakan, terdiri dari:
 
 ### K-Nearest Neighbor
 Algoritma KNN menggunakan ‘kesamaan fitur’ untuk memprediksi nilai dari setiap data yang baru dengan membandingkan seberapa dekat data baru tersebut dengan data latih. KNN bekerja dengan membandingkan jarak satu sampel ke sampel pelatihan lain dengan memilih sejumlah k tetangga terdekat (dengan k adalah sebuah angka positif). Kelebihan KNN adalah cara kerjanya yang mudah untuk dipahami dan diimplementasikan. KNN biasanya memiliki kinerja lebih baik pada data dengan dimensi rendah. Kekurangan KNN adalah dianggap lemah pada data berdimensi tinggi dan sensitif terhadap outlier.
+```
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.metrics import mean_squared_error
+knn = KNeighborsRegressor(n_neighbors=10)
+knn.fit(X_train, y_train)
+```
 
 ### Random Forest
 Algoritma Random Forest merupakan salah satu model machine learning yang termasuk ke dalam kategori ensemble (group) learning, yaitu model prediksi yang terdiri dari beberapa model dan bekerja secara bersama-sama. Pada model ensemble, setiap model harus membuat prediksi secara independen. Kemudian, prediksi dari setiap model ensemble ini digabungkan untuk membuat prediksi akhir. Random forest berisi beberapa model decision tree yang masing-masing memiliki hyperparameter yang berbeda dan dilatih pada beberapa bagian (subset) data yang berbeda juga. Kelebihan Random Forest adalah kemampuannya dalam mengatasi dataset dengan dimensi yang tinggi serta mampu menangani outlier. Kekurangan dari Random Forest adalah membutuhkan waktu lebih lama untuk pelatihan model dibandingkan KNN karena memiliki model yang lebih kompleks daripada KNN, serta modelnya sulit untuk diinterpretasikan.
+```
+from sklearn.ensemble import RandomForestRegressor
+RF = RandomForestRegressor(n_estimators=50, max_depth=16, random_state=55, n_jobs=-1)
+RF.fit(X_train, y_train)
+```
 
 ### Boosting Algorithm
 Algoritma yang menggunakan teknik boosting bekerja dengan membangun model dari data latih. Kemudian ia membuat model kedua yang bertugas memperbaiki kesalahan dari model pertama. Model ditambahkan sampai data latih terprediksi dengan baik atau telah mencapai jumlah maksimum model untuk ditambahkan. Caranya adalah dengan menggabungkan beberapa model sederhana dan dianggap lemah (weak learners) sehingga membentuk suatu model yang kuat (strong ensemble learner). Metode Boosting Algorithm yang digunakan pada proyek ini adalah AdaBoost (adaptive boosting). Kelebihan algoritma ini adalah mampu bekerja pada data berdimensi tinggi maupun data berdimensi rendah, serta mampu menangani model yang overfitting. Kekurangan dari algoritma ini adalah sensitif terhadap outlier, membutuhkan waktu lebih lama untuk pelatihan model, serta modelnya sulit untuk diinterpretasikan.
+```
+from sklearn.ensemble import AdaBoostRegressor
+boosting = AdaBoostRegressor(learning_rate=0.05, random_state=55)
+boosting.fit(X_train, y_train)
+```
 
 ## Evaluation
 Matrik yang digunakan untuk mengevaluasi ketiga model yang dikembangkan adalah matrik mean-squared-error (mse) dan matrik accuracy (acc).
