@@ -55,6 +55,15 @@ Data yang digunakan pada proyek kali ini adalah Car Price Prediction dataset yan
 - mpg : menunjukkan efisiensi mobil untuk bergerak berapa mile per gallon, untuk menyesuaikan pasar indonesia, dikonversi 1 mpg = 0.425 km per liter <br> ![mpg](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/cda2ee47-11f1-4388-9575-22bb31bec2b5)
 - engineSize : volume mesin dalam satuan Liter atau 1000 cc <br> ![engine](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/029b3ecd-ef04-4500-a179-ef9e925acf54)
 
+#### Menghilangkan outlier
+Berdasarkan gambaran boxplot pada numerical features diatas, didapatkan bahwa terdapat beberapa data yang bernilai ekstrim atau outlier, sehingga diperlukan langkah untuk menghilangkan outlier tersebut. Metode IQR digunakan untuk mengidentifikasi outlier yang berada di luar Q1 dan Q3. Nilai apa pun yang berada di luar batas ini dianggap sebagai outlier. Outliers yang diidentifikasi oleh boxplot (disebut juga “boxplot outliers”) didefinisikan sebagai data yang nilainya 1.5 QR di atas Q3 atau 1.5 QR di bawah Q1. Setelah outlier dihilangkan, dataset menjadi tersisa 65039 baris dan 10 kolom.
+```
+Q1 = df.quantile(0.25)
+Q3 = df.quantile(0.75)
+IQR=Q3-Q1
+df=df[~((df<(Q1-1.5*IQR))|(df>(Q3+1.5*IQR))).any(axis=1)]
+```
+
 ### Perbandingan categorical features terhadap kolom target 'price'
 - Perbandingan rata-rata price terhadap model menunjukkan data yang variatif, karena setiap model memiliki penamaan yang berbeda berdasarkan brand masing-masing, sehingga tidak dapat diambil kesimpulan pengaruh model terhadap kolom target price. <br> ![model-price](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/1fd76878-9542-4df0-85ce-ae4a5b343400)
 - Perbandingan rata-rata price terhadap transmission menunjukkan bahwa harga mobil dengan transmisi automatic atau semi-auto memiliki harga lebih tinggi daripada mobil dengan transmisi manual. Hal tersebut sesuai karena spare part untuk membuat transmisi automatic atau semi-auto memang lebih mahal dan canggih dibandingkan transmisi manual. <br> ![price-trans](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/c1cbae2e-bfbb-4a16-9ee2-43342aedc1da)
