@@ -78,34 +78,34 @@ Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
 Untuk melakukan proses encoding fitur kategori, salah satu teknik yang umum dilakukan adalah teknik one-hot-encoding. Library scikit-learn menyediakan fungsi ini untuk mendapatkan fitur baru yang sesuai sehingga dapat mewakili variabel kategori. Dataset memiliki empat variabel kategori, yaitu model, transmission, fuelType, dan brand. Proses encoding dilakukan dengan fitur get_dummies. Proses encoding dilakukan untuk mengubah variabel menjadi nilai numerik sehingga lebih mudah diproses oleh model.
 
 ### Pembagian dataset dengan fungsi train_test_split dari library sklearn
-Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dilatih (train) pada model dan dataset untuk menguji (test) performa model. Dalam project ini akan digunakan proporsi pembagian sebesar 90:10 dengan fungsi train_test_split dari sklearn. Pembagian data latih (train) dan data uji (test) perlu dilakukan untuk melakukan transformasi terpisah pada masing-masing dataset. Transformasi terpisah dilakukan agar tidak terjadi kebocoran data uji (test) saat melatih model dengan data latih (train).
+Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dilatih (train) pada model dan dataset untuk menguji (test) performa model. Dalam project ini akan digunakan proporsi pembagian sebesar 80:20 dengan fungsi train_test_split dari sklearn. Pembagian data latih (train) dan data uji (test) perlu dilakukan untuk melakukan transformasi terpisah pada masing-masing dataset. Transformasi terpisah dilakukan agar tidak terjadi kebocoran data uji (test) saat melatih model dengan data latih (train).
 
 ### Standarisasi
 Algoritma machine learning memiliki performa lebih baik dan konvergen lebih cepat ketika dimodelkan pada data dengan skala relatif sama atau mendekati distribusi normal. Proses scaling dan standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. Dalam proyek ini standarisasi dilakukan dengan menggunakan teknik StandarScaler dari library Scikitlearn. StandardScaler melakukan proses standarisasi fitur dengan mengurangkan mean (nilai rata-rata) kemudian membaginya dengan standar deviasi untuk menggeser distribusi. Penerapan standarisasi dengan StandardScaler dilakukan secara terpisah pada masing-masing dataset latih (train) dan dataset uji (test).
 
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
+Pada proyek ini, model machine learning yang digunakan adalah dengan tiga algoritma. Performa masing-masing algoritma akan dilakukan evaluasi untuk menentukan algoritma mana yang memberikan hasil prediksi terbaik. Ketiga algoritma yang akan digunakan, terdiri dari:
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
+### K-Nearest Neighbor
+Algoritma KNN menggunakan ‘kesamaan fitur’ untuk memprediksi nilai dari setiap data yang baru dengan membandingkan seberapa dekat data baru tersebut dengan data latih. KNN bekerja dengan membandingkan jarak satu sampel ke sampel pelatihan lain dengan memilih sejumlah k tetangga terdekat (dengan k adalah sebuah angka positif). Kelebihan KNN adalah cara kerjanya yang mudah untuk dipahami dan diimplementasikan. KNN biasanya memiliki kinerja lebih baik pada data dengan dimensi rendah. Kekurangan KNN adalah dianggap lemah pada data berdimensi tinggi dan sensitif terhadap outlier.
+
+### Random Forest
+Algoritma Random Forest merupakan salah satu model machine learning yang termasuk ke dalam kategori ensemble (group) learning, yaitu model prediksi yang terdiri dari beberapa model dan bekerja secara bersama-sama. Pada model ensemble, setiap model harus membuat prediksi secara independen. Kemudian, prediksi dari setiap model ensemble ini digabungkan untuk membuat prediksi akhir. Random forest berisi beberapa model decision tree yang masing-masing memiliki hyperparameter yang berbeda dan dilatih pada beberapa bagian (subset) data yang berbeda juga. Kelebihan Random Forest adalah kemampuannya dalam mengatasi dataset dengan dimensi yang tinggi serta mampu menangani outlier. Kekurangan dari Random Forest adalah membutuhkan waktu lebih lama untuk pelatihan model dibandingkan KNN karena memiliki model yang lebih kompleks daripada KNN, serta modelnya sulit untuk diinterpretasikan.
+
+### Boosting Algorithm
+Algoritma yang menggunakan teknik boosting bekerja dengan membangun model dari data latih. Kemudian ia membuat model kedua yang bertugas memperbaiki kesalahan dari model pertama. Model ditambahkan sampai data latih terprediksi dengan baik atau telah mencapai jumlah maksimum model untuk ditambahkan. Caranya adalah dengan menggabungkan beberapa model sederhana dan dianggap lemah (weak learners) sehingga membentuk suatu model yang kuat (strong ensemble learner). Metode Boosting Algorithm yang digunakan pada proyek ini adalah AdaBoost (adaptive boosting). Kelebihan algoritma ini adalah mampu bekerja pada data berdimensi tinggi maupun data berdimensi rendah, serta mampu menangani model yang overfitting. Kekurangan dari algoritma ini adalah sensitif terhadap outlier, membutuhkan waktu lebih lama untuk pelatihan model, serta modelnya sulit untuk diinterpretasikan.
 
 ## Evaluation
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
+Matrik yang digunakan untuk mengevaluasi ketiga model yang dikembangkan adalah matrik mean-squared-error (mse) dan matrik accuracy (acc).
 
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
+### Mean Squared Error (MSE)
+MSE adalah metrik yang digunakan untuk mengukur rata-rata kesalahan kuadrat antara nilai prediksi dan nilai aktual. Nilai MSE yang lebih kecil menunjukkan model yang lebih akurat, sehingga MSE bernilai 0 menunjukkan model yang sempurna. Perhitungan MSE dilakukan dengan menghitung selisih antara nilai aktual dan nilai prediksi untuk setiap data, kemudian melakukan fungsi kuadrat pada setiap selisih data. Nilai kuadrat dari setiap selisih data tersebut kemudian dijumlahkan dan dibagi dengan jumlah datanya. Berdasarkan metrik mse, didapatkan nilai error algoritma boosting enam kali lipat lebih besar daripada nilai error model KNN dan Random Forest.  <br> ![mse](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/cb4113d8-84b9-4d15-b1a6-0e61fbdd8fb4)
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+### Accuracy (ACC)
+Akurasi adalah metrik yang digunakan untuk mengukur proporsi data yang diklasifikasikan dengan benar. Nilai akurasi yang lebih tinggi menunjukkan model yang lebih akurat, sehingga nilai akurasi 100% menunjukkan model yang sempurna. Perhitungan Accuracy dilakukan dengan menghitung jumlah nilai prediksi yang benar dengan nilai aktual, kemudian membagi jumlah prediksi yang benar dengan keseluruh jumlah datanya. Berdasarkan metrik akurasi, didapatkan bahwa nilai akurasi KNN adalah 94.71%, sedikit lebih unggul dibandingkan akurasi Random Forest sebesar 94.25%, sedangkan akurasi algoritma boosting hanya sekitar 70% <br> ![acc](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/1a58d08a-0a46-47fb-961f-1a4834d2d0d8)
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
-
-**---Ini adalah bagian akhir laporan---**
-
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+## Hasil Evaluasi
+- Data harga mobil bekas yang digunakan bisa menjadi benchmark awal untuk membangun model prediksi harga mobil bekas di pasar Indonesia ke depannya.
+- Berdasarkan matriks korelasi, didapatkan bahwa variabel numerik yang paling mempengaruhi harga mobil bekas adalah kapasitas mesin (engineSize) dan tahun pembuatan mobil (year). Semakin besar kapasitas mesin dan semakin muda umur mobilnya, maka semakin mahal harga jual mobil bekasnya.
+- Berdasarkan hasil evaluasi, didapatkan bahwa model yang paling baik untuk memprediksi harga mobil bekas bisa menggunakan model KNN maupun model Random Forest yang memiliki akurasi 94%. 
 
