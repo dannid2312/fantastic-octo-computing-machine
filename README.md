@@ -79,6 +79,9 @@ df=df[~((df<(Q1-1.5*IQR))|(df>(Q3+1.5*IQR))).any(axis=1)]
 <br> ![price-numvar](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/4c3bd10c-bcaf-482f-a172-4b299d12b65f) <br>
 
 Berdasarkan uraian diatas, disimpulkan bahwa dataset memiliki korelasi yang bersesuaian dengan fakta di lapangan, dimana harga mobil bekas berkorelasi positif dengan tahun pembuatan (year), pajak (tax), dan kapasitas mesin (engineSize), sedangkan jarak tempuh (mileage) dan konsumsi bahan bakar (mpg) memiliki korelasi negatif terhadap harga mobil bekas. Variabel yang berkontribusi besar terhadap harga mobil bekas adalah kapasitas mesin (engineSize) kemudian tahun pembuatan (year). Variabel yang memberikan kontribusi paling kecil adalah nilai pajak (tax), sehingga kolom tax akan dihilangkan dari dataset dalam melakukan permodelan.
+```
+df.drop(columns=['tax'], inplace=True)
+```
 
 ## Data Preparation
 Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
