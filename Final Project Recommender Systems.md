@@ -35,35 +35,118 @@ Untuk mencapai tujuan atau goals tersebut, dilakukan beberapa tahapan sebagai be
 - Melakukan univariate analysis untuk memahami kualitas data yang dimiliki.
 - Melakukan penggabungan terhadap dataset database film dengan dataset database rating.
 - Melakukan label encoding untuk merubah categorical features seperti userId dan movieId menjadi numerical features untuk memudahkan model mencapai konvergensi selama pelatihan.
-- Melakukan standardization berupa min max scaling untuk merubah data rating dari 0-5 menjadi 0-1 untuk memudahkan model mencapai konvergensi selama pelatihan.
+- Melakukan standardization berupa min max scaling untuk merubah data rating dari skala [0,5] menjadi [0,1] untuk memudahkan model mencapai konvergensi selama pelatihan.
 - Melakukan pengacakan terhadap dataset serta pembagian untuk menentukan data train dan data validasi.
 - Melakukan perhitungan untuk menentukan skor kecocokan antara pengguna dan film yang ditonton dengan teknik embedding.
 - Melakukan operasi perkalian dot product antara embedding pengguna dan film.
 - Melakukan penambahan bias untuk setiap user dan resto. 
-- Menetapkan sko kecocolan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
+- Menetapkan skor kecocokan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
 - Melakukan permodelan dengan metode collaborative filtering untuk memproses model pengguna dan rating filmnya.
 - Memberikan rekomendasi film baik terhadap pengguna baru maupun pengguna lama.
 
 ## Data Understanding
-Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan.
+Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan. Hasil akhir dari penggabungan dataset terdiri dari 100836 baris dan 6 kolom, serta tidak terdapat missing values.
 
-Variabel-variabel yang terdapat pada dataset gabungan antara file movies.csv dan ratings.csv adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+```
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 100836 entries, 0 to 100835
+Data columns (total 6 columns):
+ #   Column     Non-Null Count   Dtype  
+---  ------     --------------   -----  
+ 0   movieId    100836 non-null  int64  
+ 1   title      100836 non-null  object 
+ 2   genres     100836 non-null  object 
+ 3   userId     100836 non-null  int64  
+ 4   rating     100836 non-null  float64
+ 5   timestamp  100836 non-null  int64  
+dtypes: float64(1), int64(3), object(2)
+memory usage: 5.4+ MB
+```
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data beserta insight atau exploratory data analysis.
+### Variabel-variabel yang terdapat pada dataset gabungan antara file movies.csv dan ratings.csv adalah sebagai berikut:
+- movieId: menunjukkan nomor identitas atau index dari suatu film, merupakan kolom yang menjadi acuan dalam penggabungan antara dua dataset.
+- title: menunjukkan judul film
+- genres: menunjukkan genre / ragam / tipe film
+- userId: menunjukkan nomor identitas atau index dari pengguna atau penonton film yang memberikan penilaian (rating)
+- rating: menunjukkan nilai yang diperoleh dari pengguna atau penonton film
+- timestamp: menunjukkan waktu pengguna melakukan penilaian terhadap suatu film
+
+### Univariate Analysis
+```
+Jumlah film berdasarkan movie ID 9742
+Jumlah user yang memberikan penilaian 610
+Jumlah film yang dinilai berdasarkan movie ID 9724
+Jumlah nilai minimum rating 0.5
+Jumlah nilai minimum rating 5.0
+```
+Berdasarkan pengecekan setiap variabel diatas, didapatkan bahwa dari 9742 film yang tersedia di database, hanya 9724 film yang sudah diberikan rating, sehingga masih ada 18 film yang belum pernah diberikan penilaian. Kemudian, pengguna atau penonton (user) yang melakukan penilaian adalah sebanyak 610 orang, dengan rentang penilaian antara 0.5 sampai 5.0. 
+![box-rating](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/3fe38a57-94ab-4451-9a0b-21b5904b5ffc)
+
+Berdasarkan grafik di bawah, nilai yang paling banyak diberikan adalah 4.0, sedangkan nilai paling sedikit diberikan adalah 0.5.
+![bar-rating](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/d7222b3e-63f1-4046-acd6-e369b9a125c6)
 
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
+### Encoding fitur kategori
+Encoding dilakukan terhadap variabel userId dan movieId. Meskipun kedua variabel tersebut sudah memiliki nilai integer, namun encoding tetap dilakukan untuk mempermudah model dalam melakukan pelatihan sehingga konvergensi lebih mudah dicapai. Encoding dilakukan secara manual dengan menggunakan fungsi enumerate().
+```
+# Mengubah userID menjadi list tanpa nilai yang sama
+user_ids = df['userId'].unique().tolist()
+print('list userID: ', user_ids)
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+# Melakukan encoding userID
+user_to_user_encoded = {x: i for i, x in enumerate(user_ids)}
+print('encoded userID : ', user_to_user_encoded)
+
+# Melakukan proses encoding angka ke ke userID
+user_encoded_to_user = {i: x for i, x in enumerate(user_ids)}
+print('encoded angka ke userID: ', user_encoded_to_user)
+
+# Mengubah movieID menjadi list tanpa nilai yang sama
+movie_ids = df['movieId'].unique().tolist()
+print('list movieID: ', movie_ids)
+
+# Melakukan proses encoding movieID
+movie_to_movie_encoded = {x: i for i, x in enumerate(movie_ids)}
+print('encoded movieID : ', movie_to_movie_encoded)
+
+# Melakukan proses encoding angka ke movieID
+movie_encoded_to_movie = {i: x for i, x in enumerate(movie_ids)}
+print('encoded angka ke movieID: ', movie_encoded_to_movie)
+
+# Mapping userID ke dataframe user
+df['user'] = df['userId'].map(user_to_user_encoded)
+
+# Mapping movieID ke dataframe movie
+df['movie'] = df['movieId'].map(movie_to_movie_encoded)
+```
+
+### Standarisasi
+Algoritma machine learning memiliki performa lebih baik dan konvergen lebih cepat ketika dimodelkan pada data dengan skala relatif sama atau mendekati distribusi normal. Proses scaling dan standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. Pada proyek ini standarisasi yang dilakukan adalah dengan menggunakan min max scaling untuk mengubah variabel rating dari yang semula memiliki skala [0,5] menjadi skala [0,1].
+```
+# Membuat variabel x untuk mencocokkan data user dan movie menjadi satu value
+x = df[['user', 'movie']].values
+
+# Membuat variabel y untuk membuat rating dari hasil
+y = df['rating'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
+```
+
+### Pembagian dataset dengan fungsi train_test_split dari library sklearn
+Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dilatih (train) pada model dan dataset untuk menguji (test) performa model. Dalam project ini akan digunakan proporsi pembagian sebesar 80:20 secara manual dengan melakukan split terhadap dataframe yang sebelumnya sudah diacak.
+```
+# Membagi menjadi 80% data train dan 20% data validasi
+train_indices = int(0.8 * df.shape[0])
+x_train, x_val, y_train, y_val = (
+    x[:train_indices],
+    x[train_indices:],
+    y[:train_indices],
+    y[train_indices:]
+)
+```
 
 ## Modeling
-Tahapan ini membahas mengenai model sisten rekomendasi yang Anda buat untuk menyelesaikan permasalahan. Sajikan top-N recommendation sebagai output.
+Pada tahap ini, model menghitung skor kecocokan antara pengguna dan resto dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan resto. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan resto. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan resto. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
+
 
 **Rubrik/Kriteria Tambahan (Opsional)**: 
 - Menyajikan dua solusi rekomendasi dengan algoritma yang berbeda.
