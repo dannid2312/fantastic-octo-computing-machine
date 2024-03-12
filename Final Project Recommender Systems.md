@@ -21,6 +21,7 @@ Berdasarkan kondisi yang telah diuraikan sebelumnya, sistem rekomendasi film dik
 - Diperlukan data yang lengkap, akurat, dan/atau tidak mengandung bias tentang rating film dari banyak penonton atau pelanggan.
 - Diperlukan pengukuran yang baik dalam menentukan akurasi dan personalisasi rekomendasi untuk menghasilkan rekomendasi yang relevan.
 - Diperlukan sistem rekomendasi film yang dapat memberikan rekomendasi kepada pengguna baru yang belum memberikan banyak data tentang preferensinya.
+- Diperlukan sistem rekomendasi film yang dapat memberikan kesempatan rekomendasi kepada film serupa yang belum pernah mendapatkan rating.
 
 ### Goals
 
@@ -28,6 +29,7 @@ Untuk menjawab permasalahan tersebut, sistem rekomendasi film dikembangkan denga
 - Menggunakan data rating dari film lama untuk mendapatkan data yang lengkap, serta melakukan data preparation yang baik untuk menghilangkan data yang tidak berkualitas atau data yang bias.
 - Menggunakan metrik evaluasi root mean squared error (RMSE) untuk menentukan seberapa baik sistem memberikan rekomendasi yang relevan dan terpersonalisasi.
 - Menggunakan metode collaborative filtering untuk memberikan rekomendasi film baik kepada pengguna baru maupun pengguna lama yang telah terpersonalisasi.
+- Menggunakan metode content based filtering untuk memberikan rekomendasi film berdasarkan genre film yang sudah pernah ditonton sebelumnya.
 
 ### Solution Statement
 Untuk mencapai tujuan atau goals tersebut, dilakukan beberapa tahapan sebagai berikut:
@@ -42,7 +44,11 @@ Untuk mencapai tujuan atau goals tersebut, dilakukan beberapa tahapan sebagai be
 - Melakukan penambahan bias untuk setiap user dan resto. 
 - Menetapkan skor kecocokan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
 - Melakukan permodelan dengan metode collaborative filtering untuk memproses model pengguna dan rating filmnya.
-- Memberikan rekomendasi film baik terhadap pengguna baru maupun pengguna lama.
+- Memberikan rekomendasi film baik terhadap pengguna baru maupun pengguna lama dengan metode collaborative filtering.
+- Melakukan pencarian fitur penting pada kolom genre menggunakan fungsi tfidfvectorizer() dari library sklearn.
+- Melakukan identifikasi korelasi antara film dan genre melalui perhitungan derajat kesamaan dengan menggunakan fungsi cosine_similarity dari library sklearn.
+- Melakukan permodelan dengan motede content based filtering untuk memproses model film dan genre filmnya.
+- Memberikan rekomendasi film berdasarkan kemiripannya dengan film yang sudah pernah ditonton sebelumnya.
 
 ## Data Understanding
 Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan. Hasil akhir dari penggabungan dataset terdiri dari 100836 baris dan 6 kolom, serta tidak terdapat missing values.
@@ -72,6 +78,15 @@ memory usage: 5.4+ MB
 - timestamp: menunjukkan waktu pengguna melakukan penilaian terhadap suatu film
 
 ### Univariate Analysis
+Berdasarkan jumlah film sebanyak 9742, terbagi kedalam 951 genre yang berbeda. Namun bila dilihat lebih detail, setiap film bisa terdiri dari berbagai genre, sehingga perlu dilakukan pemrosesan lebih lanjut terhadap kolom genre. Pertama, adalah mengubah tanda "|" dan mengganti dengan " ", lalu menghilangkan tanda "-", dan merubah film yang tidak bergenre "non genres listed" dengan "None". Rangkaian tersebut diperlukan untuk memudahkan nantinya ketika melakukan ekstraksi fitur genre dengan fungsi TF-IDF Vectorizer.
+```
+movies['genres'] = movies['genres'].str.replace("|", " ")
+movies['genres'] = movies['genres'].str.replace("-","")
+movies['genres'] = movies['genres'].str.replace("(no genres listed)","None")
+```
+![before](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/faaa737f-7d8d-49d4-97d0-dadee07065f0)
+![after](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/1f74bc59-57b0-4089-b07d-b52892feb7a1)
+
 ```
 Jumlah film berdasarkan movie ID 9742
 Jumlah user yang memberikan penilaian 610
