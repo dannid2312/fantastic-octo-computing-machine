@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Selama pandemi COVID-19, terjadi peningkatan signifikan dalam permintaan hiburan di rumah, yang mencakup peningkatan penggunaan platform streaming. Pembatasan sosial dan penutupan bioskop telah mendorong masyarakat untuk beralih ke media digital untuk hiburan [1](https://mapub.org/ojs/index.php/mapeh/article/view/72). Platform streaming seperti Netflix menawarkan ribuan film kepada penggunanya yang dapat membuat pengguna kesulitan menemukan film yang sesuai dengan selera mereka. Netflix berhasil menjawab permasalahan tersebut dengan menggunakan machine learning untuk meningkatkan retensi pelanggan dan kepuasan pengguna dengan melakukan pembangunan sistem rekomendasi film yang efektif [2](https://dl.acm.org/doi/pdf/10.1145/2843948). Dengan mengadopsi pendekatan yang terinspirasi dari praktik terbaik yang ditunjukkan oleh Netflix, movie recommendation system dapat meningkatkan kemampuan dalam menyajikan rekomendasi film yang relevan dan memuaskan bagi pengguna.
+Selama pandemi COVID-19, terjadi peningkatan signifikan dalam permintaan hiburan di rumah, yang mencakup peningkatan penggunaan platform streaming. Pembatasan sosial dan penutupan bioskop telah mendorong masyarakat untuk beralih ke media digital untuk hiburan [[1](https://mapub.org/ojs/index.php/mapeh/article/view/72)]. Platform streaming seperti Netflix menawarkan ribuan film kepada penggunanya yang dapat membuat pengguna kesulitan menemukan film yang sesuai dengan selera mereka. Netflix berhasil menjawab permasalahan tersebut dengan menggunakan machine learning untuk meningkatkan retensi pelanggan dan kepuasan pengguna dengan melakukan pembangunan sistem rekomendasi film yang efektif [[2](https://dl.acm.org/doi/pdf/10.1145/2843948)]. Dengan mengadopsi pendekatan yang terinspirasi dari praktik terbaik yang ditunjukkan oleh Netflix, movie recommendation system dapat meningkatkan kemampuan dalam menyajikan rekomendasi film yang relevan dan memuaskan bagi pengguna.
 
 Proyek movie recommendation system memiliki manfaat yang sangat besar, yaitu: 
 - Meningkatkan kepuasan pengguna: Sistem rekomendasi yang akurat dan personal dapat membantu pengguna menemukan film yang sesuai dengan selera mereka dengan lebih mudah dan cepat. Hal ini dapat meningkatkan kepuasan pengguna dan mendorong mereka untuk terus menggunakan platform streaming atau situs web rekomendasi film.
@@ -23,7 +23,6 @@ Sistem rekomendasi film merupakan alat penting bagi bisnis di industri hiburan. 
 
 Berdasarkan kondisi yang telah diuraikan sebelumnya, sistem rekomendasi film dikembangkan untuk menjawab permasalahan sebagai berikut:
 - Diperlukan data yang lengkap, akurat, dan/atau tidak mengandung bias tentang rating film dari banyak penonton atau pelanggan.
-- Diperlukan pengukuran yang baik dalam menentukan akurasi dan personalisasi rekomendasi untuk menghasilkan rekomendasi yang relevan.
 - Diperlukan sistem rekomendasi film yang dapat memberikan rekomendasi kepada pengguna baru yang belum memberikan banyak data tentang preferensinya.
 - Diperlukan sistem rekomendasi film yang dapat memberikan kesempatan rekomendasi kepada film serupa yang belum pernah mendapatkan rating.
 
@@ -31,28 +30,14 @@ Berdasarkan kondisi yang telah diuraikan sebelumnya, sistem rekomendasi film dik
 
 Untuk menjawab permasalahan tersebut, sistem rekomendasi film dikembangkan dengan tujuan atau goals sebagai berikut:
 - Menggunakan data rating dari film lama untuk mendapatkan data yang lengkap, serta melakukan data preparation yang baik untuk menghilangkan data yang tidak berkualitas atau data yang bias.
-- Menggunakan metrik evaluasi root mean squared error (RMSE) untuk menentukan seberapa baik sistem memberikan rekomendasi yang relevan dan terpersonalisasi.
 - Menggunakan metode collaborative filtering untuk memberikan rekomendasi film baik kepada pengguna baru maupun pengguna lama yang telah terpersonalisasi.
 - Menggunakan metode content based filtering untuk memberikan rekomendasi film berdasarkan genre film yang sudah pernah ditonton sebelumnya.
 
 ### Solution Statement
-Untuk mencapai tujuan atau goals tersebut, dilakukan beberapa tahapan sebagai berikut:
-- Menggunakan database film yang memiliki data rating yang lengkap dan melimpah.
-- Melakukan univariate analysis untuk memahami kualitas data yang dimiliki.
-- Melakukan penggabungan terhadap dataset database film dengan dataset database rating.
-- Melakukan label encoding untuk merubah categorical features seperti userId dan movieId menjadi numerical features untuk memudahkan model mencapai konvergensi selama pelatihan.
-- Melakukan standardization berupa min max scaling untuk merubah data rating dari skala [0,5] menjadi [0,1] untuk memudahkan model mencapai konvergensi selama pelatihan.
-- Melakukan pengacakan terhadap dataset serta pembagian untuk menentukan data train dan data validasi.
-- Melakukan perhitungan untuk menentukan skor kecocokan antara pengguna dan film yang ditonton dengan teknik embedding.
-- Melakukan operasi perkalian dot product antara embedding pengguna dan film.
-- Melakukan penambahan bias untuk setiap user dan film. 
-- Menetapkan skor kecocokan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
-- Melakukan permodelan dengan metode collaborative filtering untuk memproses model pengguna dan rating filmnya.
-- Memberikan rekomendasi film baik terhadap pengguna baru maupun pengguna lama dengan metode collaborative filtering.
-- Melakukan pencarian fitur penting pada kolom genre menggunakan fungsi tfidfvectorizer() dari library sklearn.
-- Melakukan identifikasi korelasi antara film dan genre melalui perhitungan derajat kesamaan dengan menggunakan fungsi cosine_similarity dari library sklearn.
-- Melakukan permodelan dengan motede content based filtering untuk memproses model film dan genre filmnya.
-- Memberikan rekomendasi film berdasarkan kemiripannya dengan film yang sudah pernah ditonton sebelumnya.
+Untuk mencapai masing-masing tujuan atau goals tersebut, dilakukan tahapan sebagai berikut:
+- Menggunakan database film yang memiliki data rating yang lengkap dan melimpah untuk kemudian dilakukan univariate analysis, preprocessing, dan data preparation berupa encoding dan standardization untuk mendapatkan data yang berkualitas.
+- Melakukan permodelan dengan metode collaborative filtering untuk memproses model pengguna dan rating filmnya dengan menggunakan teknik embedding dan perkalian dot product untuk memberikan rekomendasi film baik terhadap pengguna baru maupun pengguna lama berdasarkan skor kecocokan yang dihitung dengan fungsi aktivasi sigmoid.
+- Melakukan permodelan dengan motede content based filtering untuk memproses model film dan genre filmnya dengan bantuan fungsi tfidfvectorizer dan cosine_similarity dari library sklearn untuk memberikan rekomendasi film berdasarkan kemiripannya dengan film yang sudah pernah ditonton sebelumnya.
 
 ## Data Understanding
 Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan. Hasil akhir dari penggabungan dataset terdiri dari 100836 baris dan 6 kolom, serta tidak terdapat missing values.
@@ -87,11 +72,6 @@ Dari data movies.csv, dari jumlah film sebanyak 9742, terbagi kedalam 951 genre 
 ![before](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/faaa737f-7d8d-49d4-97d0-dadee07065f0)
 
 Pertama, adalah mengubah tanda "|" dan mengganti dengan " ", lalu menghilangkan tanda "-", dan merubah film yang tidak bergenre "non genres listed" dengan "None". Rangkaian tersebut diperlukan untuk memudahkan nantinya ketika melakukan ekstraksi fitur genre dengan fungsi TF-IDF Vectorizer.
-```
-movies['genres'] = movies['genres'].str.replace("|", " ")
-movies['genres'] = movies['genres'].str.replace("-","")
-movies['genres'] = movies['genres'].str.replace("(no genres listed)","None")
-```
 
 ![after](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/1f74bc59-57b0-4089-b07d-b52892feb7a1)
 
@@ -114,60 +94,12 @@ Berdasarkan grafik, nilai yang paling banyak diberikan adalah 4.0, sedangkan nil
 Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
 ### Encoding fitur kategori
 Encoding dilakukan terhadap variabel userId dan movieId. Meskipun kedua variabel tersebut sudah memiliki nilai integer, namun encoding tetap dilakukan untuk mempermudah model dalam melakukan pelatihan sehingga konvergensi lebih mudah dicapai. Encoding dilakukan secara manual dengan menggunakan fungsi enumerate().
-```
-# Mengubah userID menjadi list tanpa nilai yang sama
-user_ids = df['userId'].unique().tolist()
-print('list userID: ', user_ids)
-
-# Melakukan encoding userID
-user_to_user_encoded = {x: i for i, x in enumerate(user_ids)}
-print('encoded userID : ', user_to_user_encoded)
-
-# Melakukan proses encoding angka ke ke userID
-user_encoded_to_user = {i: x for i, x in enumerate(user_ids)}
-print('encoded angka ke userID: ', user_encoded_to_user)
-
-# Mengubah movieID menjadi list tanpa nilai yang sama
-movie_ids = df['movieId'].unique().tolist()
-print('list movieID: ', movie_ids)
-
-# Melakukan proses encoding movieID
-movie_to_movie_encoded = {x: i for i, x in enumerate(movie_ids)}
-print('encoded movieID : ', movie_to_movie_encoded)
-
-# Melakukan proses encoding angka ke movieID
-movie_encoded_to_movie = {i: x for i, x in enumerate(movie_ids)}
-print('encoded angka ke movieID: ', movie_encoded_to_movie)
-
-# Mapping userID ke dataframe user
-df['user'] = df['userId'].map(user_to_user_encoded)
-
-# Mapping movieID ke dataframe movie
-df['movie'] = df['movieId'].map(movie_to_movie_encoded)
-```
 
 ### Standarisasi
 Algoritma machine learning memiliki performa lebih baik dan konvergen lebih cepat ketika dimodelkan pada data dengan skala relatif sama atau mendekati distribusi normal. Proses scaling dan standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. Pada proyek ini standarisasi yang dilakukan adalah dengan menggunakan min max scaling untuk mengubah variabel rating dari yang semula memiliki skala [0,5] menjadi skala [0,1].
-```
-# Membuat variabel x untuk mencocokkan data user dan movie menjadi satu value
-x = df[['user', 'movie']].values
-
-# Membuat variabel y untuk membuat rating dari hasil
-y = df['rating'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
-```
 
 ### Pembagian dataset dengan fungsi train_test_split dari library sklearn
 Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dilatih (train) pada model dan dataset untuk menguji (test) performa model. Dalam project ini akan digunakan proporsi pembagian sebesar 80:20 secara manual dengan melakukan split terhadap dataframe yang sebelumnya sudah diacak.
-```
-# Membagi menjadi 80% data train dan 20% data validasi
-train_indices = int(0.8 * df.shape[0])
-x_train, x_val, y_train, y_val = (
-    x[:train_indices],
-    x[train_indices:],
-    y[:train_indices],
-    y[train_indices:]
-)
-```
 
 ## Modeling
 ### Model Development: Collaborative Filtering
