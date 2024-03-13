@@ -39,8 +39,9 @@ Untuk mencapai masing-masing tujuan atau goals tersebut, dilakukan tahapan sebag
 - Melakukan permodelan dengan motede content based filtering untuk memproses model film dan genre filmnya dengan bantuan fungsi tfidfvectorizer dan cosine_similarity dari library sklearn untuk memberikan rekomendasi film berdasarkan kemiripannya dengan film yang sudah pernah ditonton sebelumnya.
 
 ## Data Understanding
-Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan. Hasil akhir dari penggabungan dataset terdiri dari 100836 baris dan 6 kolom, serta tidak terdapat missing values.
+Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan. Hasil akhir dari penggabungan dataset terdiri dari 100836 baris dan 6 kolom, serta tidak terdapat missing values yang ditunjukkan pada Tabel 1.
 
+(Tabel 1. Dataset Gabungan)
 | # | Column    | Non-Null Count  | Dtype   |
 |---|-----------|-----------------|---------|
 | 1 | movieId   | 100836 non-null | int64   |
@@ -59,15 +60,9 @@ Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendat
 - timestamp: menunjukkan waktu pengguna melakukan penilaian terhadap suatu film
 
 ### Univariate Analysis
-Dari data movies.csv, dari jumlah film sebanyak 9742, terbagi kedalam 951 genre yang berbeda. Namun bila dilihat lebih detail, setiap film bisa terdiri dari berbagai genre, sehingga perlu dilakukan pemrosesan lebih lanjut terhadap kolom genre.
+Dari data movies.csv, dari jumlah film sebanyak 9742, terbagi kedalam 951 genre yang berbeda. Namun bila dilihat lebih detail, setiap film bisa terdiri dari berbagai genre, sehingga perlu dilakukan pemrosesan lebih lanjut terhadap kolom genre. Pertama, adalah mengubah tanda "|" dan mengganti dengan " ", lalu menghilangkan tanda "-", dan merubah film yang tidak bergenre "non genres listed" dengan "None". Rangkaian tersebut diperlukan untuk memudahkan nantinya ketika melakukan ekstraksi fitur genre dengan fungsi TF-IDF Vectorizer.
 
-![before](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/faaa737f-7d8d-49d4-97d0-dadee07065f0)
-
-Pertama, adalah mengubah tanda "|" dan mengganti dengan " ", lalu menghilangkan tanda "-", dan merubah film yang tidak bergenre "non genres listed" dengan "None". Rangkaian tersebut diperlukan untuk memudahkan nantinya ketika melakukan ekstraksi fitur genre dengan fungsi TF-IDF Vectorizer.
-
-![after](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/1f74bc59-57b0-4089-b07d-b52892feb7a1)
-
-Berdasarkan pengecekan setiap variabel diatas, didapatkan bahwa dari 9742 film yang tersedia di database, hanya 9724 film yang sudah diberikan rating, sehingga masih ada 18 film yang belum pernah diberikan penilaian. Kemudian, pengguna atau penonton (user) yang melakukan penilaian adalah sebanyak 610 orang, dengan rentang penilaian antara 0.5 sampai 5.0.
+Berdasarkan pengecekan setiap variabel dari data ratings.csv, didapatkan bahwa dari 9742 film yang tersedia di database, hanya 9724 film yang sudah diberikan rating, sehingga masih ada 18 film yang belum pernah diberikan penilaian. Kemudian, pengguna atau penonton (user) yang melakukan penilaian adalah sebanyak 610 orang, dengan rentang penilaian antara 0.5 sampai 5.0.
 ```
 Jumlah film berdasarkan movie ID 9742
 Jumlah user yang memberikan penilaian 610
@@ -77,10 +72,9 @@ Jumlah nilai minimum rating 5.0
 ```
 
 ![box-rating](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/3fe38a57-94ab-4451-9a0b-21b5904b5ffc)
+(Gambar 1. Boxplot Rating)
 
-Berdasarkan grafik, nilai yang paling banyak diberikan adalah 4.0, sedangkan nilai paling sedikit diberikan adalah 0.5.
-
-![bar-rating](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/d7222b3e-63f1-4046-acd6-e369b9a125c6)
+Berdasarkan gambar 1 berupa boxplot sebaran nilai rating yang diberikan pengguna, nilai yang paling banyak diberikan adalah antara 3.0 dan 4.0, serta terdapat nilai outlier yaitu 0.5 dan 1.
 
 ## Data Preparation
 Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
