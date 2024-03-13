@@ -41,21 +41,14 @@ Untuk mencapai masing-masing tujuan atau goals tersebut, dilakukan tahapan sebag
 ## Data Understanding
 Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan. Hasil akhir dari penggabungan dataset terdiri dari 100836 baris dan 6 kolom, serta tidak terdapat missing values.
 
-```
-<class 'pandas.core.frame.DataFrame'>
-Int64Index: 100836 entries, 0 to 100835
-Data columns (total 6 columns):
- #   Column     Non-Null Count   Dtype  
----  ------     --------------   -----  
- 0   movieId    100836 non-null  int64  
- 1   title      100836 non-null  object 
- 2   genres     100836 non-null  object 
- 3   userId     100836 non-null  int64  
- 4   rating     100836 non-null  float64
- 5   timestamp  100836 non-null  int64  
-dtypes: float64(1), int64(3), object(2)
-memory usage: 5.4+ MB
-```
+| # | Column    | Non-Null Count  | Dtype   |
+|---|-----------|-----------------|---------|
+| 1 | movieId   | 100836 non-null | int64   |
+| 2 | title     | 100836 non-null | object  |
+| 3 | genres    | 100836 non-null | object  |
+| 4 | userId    | 100836 non-null | int64   |
+| 5 | rating    | 100836 non-null | float64 |
+| 6 | timestamp | 100836 non-null | int64   |
 
 ### Variabel-variabel yang terdapat pada dataset gabungan antara file movies.csv dan ratings.csv adalah sebagai berikut:
 - movieId: menunjukkan nomor identitas atau index dari suatu film, merupakan kolom yang menjadi acuan dalam penggabungan antara dua dataset.
