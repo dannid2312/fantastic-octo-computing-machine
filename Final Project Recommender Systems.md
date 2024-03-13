@@ -2,14 +2,18 @@
 
 ## Project Overview
 
-Selama pandemi COVID-19, terjadi peningkatan signifikan dalam permintaan hiburan di rumah, yang mencakup peningkatan penggunaan platform streaming seperti Netflix, Disney Plus, dan Amazon Prime. Pembatasan sosial dan penutupan bioskop telah mendorong masyarakat untuk beralih ke media digital untuk hiburan. [The Impact COVID-19 Had On The Entertainment Industry In 2020](https://www.forbes.com/sites/bradadgate/2021/04/13/the-impact-covid-19-had-on-the-entertainment-industry-in-2020/?sh=4ca49c19250f)
-
-Platform streaming seperti Netflix menawarkan ribuan film kepada penggunanya yang dapat membuat pengguna kesulitan menemukan film yang sesuai dengan selera mereka. Netflix berhasil menjawab permasalahan tersebut dengan menggunakan machine learning untuk meningkatkan retensi pelanggan dan kepuasan pengguna dengan melakukan pembangunan sistem rekomendasi film yang efektif. Dengan mengadopsi pendekatan yang terinspirasi dari praktik terbaik yang ditunjukkan oleh Netflix, movie recommendation system dapat meningkatkan kemampuan dalam menyajikan rekomendasi film yang relevan dan memuaskan bagi pengguna. [The Netflix Recommender System: Algorithms, Business Value, and Innovation](https://dl.acm.org/doi/pdf/10.1145/2843948)
+Selama pandemi COVID-19, terjadi peningkatan signifikan dalam permintaan hiburan di rumah, yang mencakup peningkatan penggunaan platform streaming. Pembatasan sosial dan penutupan bioskop telah mendorong masyarakat untuk beralih ke media digital untuk hiburan [1](https://mapub.org/ojs/index.php/mapeh/article/view/72). Platform streaming seperti Netflix menawarkan ribuan film kepada penggunanya yang dapat membuat pengguna kesulitan menemukan film yang sesuai dengan selera mereka. Netflix berhasil menjawab permasalahan tersebut dengan menggunakan machine learning untuk meningkatkan retensi pelanggan dan kepuasan pengguna dengan melakukan pembangunan sistem rekomendasi film yang efektif [2](https://dl.acm.org/doi/pdf/10.1145/2843948). Dengan mengadopsi pendekatan yang terinspirasi dari praktik terbaik yang ditunjukkan oleh Netflix, movie recommendation system dapat meningkatkan kemampuan dalam menyajikan rekomendasi film yang relevan dan memuaskan bagi pengguna.
 
 Proyek movie recommendation system memiliki manfaat yang sangat besar, yaitu: 
 - Meningkatkan kepuasan pengguna: Sistem rekomendasi yang akurat dan personal dapat membantu pengguna menemukan film yang sesuai dengan selera mereka dengan lebih mudah dan cepat. Hal ini dapat meningkatkan kepuasan pengguna dan mendorong mereka untuk terus menggunakan platform streaming atau situs web rekomendasi film.
 - Meningkatkan efisiensi pencarian film: Sistem rekomendasi dapat membantu pengguna menghemat waktu dan tenaga dalam mencari film yang ingin ditonton. Hal ini dapat meningkatkan efisiensi dan produktivitas pengguna.
 - Meningkatkan pendapatan platform: Sistem rekomendasi dapat membantu platform streaming dan situs web rekomendasi film meningkatkan pendapatan mereka dengan mendorong pengguna untuk menonton lebih banyak film.
+
+### Referensi
+[1] Soldo, L., & Schagerl, C. (2023). Impact of the Covid-19 Pandemic on Netflix. MAP Education and Humanities, 3(1), 75–82. [https://doi.org/10.53880/2744-2373.2023.3.1.75](https://mapub.org/ojs/index.php/mapeh/article/view/72)
+[2] Carlos A. Gomez-Uribe and Neil Hunt. 2015. The Netflix recommender system: Algorithms, business value,
+and innovation. ACM Trans. Manage. Inf. Syst. 6, 4, Article 13 (December 2015), 19 pages.
+DOI: [http://dx.doi.org/10.1145/2843948](https://dl.acm.org/doi/pdf/10.1145/2843948)
 
 ## Business Understanding
 
@@ -41,7 +45,7 @@ Untuk mencapai tujuan atau goals tersebut, dilakukan beberapa tahapan sebagai be
 - Melakukan pengacakan terhadap dataset serta pembagian untuk menentukan data train dan data validasi.
 - Melakukan perhitungan untuk menentukan skor kecocokan antara pengguna dan film yang ditonton dengan teknik embedding.
 - Melakukan operasi perkalian dot product antara embedding pengguna dan film.
-- Melakukan penambahan bias untuk setiap user dan resto. 
+- Melakukan penambahan bias untuk setiap user dan film. 
 - Menetapkan skor kecocokan dalam skala [0,1] dengan fungsi aktivasi sigmoid.
 - Melakukan permodelan dengan metode collaborative filtering untuk memproses model pengguna dan rating filmnya.
 - Memberikan rekomendasi film baik terhadap pengguna baru maupun pengguna lama dengan metode collaborative filtering.
@@ -167,7 +171,7 @@ x_train, x_val, y_train, y_val = (
 
 ## Modeling
 ### Model Development: Collaborative Filtering
-Pada tahap ini, model menghitung skor kecocokan antara pengguna dan resto dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan resto. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan resto. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan resto. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid. Permodelan dilakukan dengan membuat class RecommenderNet dengan keras Model class yang disesuaikan dengan movie recommendation system. Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. Berikut ini adalah contoh hasil rekomendasi dengan metode collaborative filtering:
+Pada tahap ini, model menghitung skor kecocokan antara pengguna dan film dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan film. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan film. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan film. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid. Permodelan dilakukan dengan membuat class RecommenderNet dengan keras Model class yang disesuaikan dengan movie recommendation system. Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. Berikut ini adalah contoh hasil rekomendasi dengan metode collaborative filtering:
 
 ![collaborative](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/141d6554-aec0-4e25-bef0-164a20d8eecc)
 
