@@ -11,9 +11,8 @@ Proyek movie recommendation system memiliki manfaat yang sangat besar, yaitu:
 
 ### Referensi
 [1] Soldo, L., & Schagerl, C. (2023). Impact of the Covid-19 Pandemic on Netflix. MAP Education and Humanities, 3(1), 75–82. [https://doi.org/10.53880/2744-2373.2023.3.1.75](https://mapub.org/ojs/index.php/mapeh/article/view/72)
-[2] Carlos A. Gomez-Uribe and Neil Hunt. 2015. The Netflix recommender system: Algorithms, business value,
-and innovation. ACM Trans. Manage. Inf. Syst. 6, 4, Article 13 (December 2015), 19 pages.
-DOI: [http://dx.doi.org/10.1145/2843948](https://dl.acm.org/doi/pdf/10.1145/2843948)
+
+[2] Carlos A. Gomez-Uribe and Neil Hunt. 2015. The Netflix recommender system: Algorithms, business value, and innovation. ACM Trans. Manage. Inf. Syst. 6, 4, Article 13 (December 2015), 19 pages. DOI: [http://dx.doi.org/10.1145/2843948](https://dl.acm.org/doi/pdf/10.1145/2843948)
 
 ## Business Understanding
 
