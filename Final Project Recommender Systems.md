@@ -74,7 +74,17 @@ Jumlah nilai minimum rating 5.0
 ![box-rating](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/3fe38a57-94ab-4451-9a0b-21b5904b5ffc)
 (Gambar 1. Boxplot Rating)
 
-Berdasarkan gambar 1 berupa boxplot sebaran nilai rating yang diberikan pengguna, nilai yang paling banyak diberikan adalah antara 3.0 dan 4.0, serta terdapat nilai outlier yaitu 0.5 dan 1.
+Berdasarkan gambar 1 berupa boxplot sebaran nilai rating yang diberikan pengguna, nilai yang paling banyak diberikan adalah antara 3.0 dan 4.0, serta terdapat nilai outlier yaitu 0.5 dan 1, sehingga diperlukan treatment terhadap outlier tersebut. Outlier dihilangkan dengan menggunakan "the 1.5 IQR rule" yaitu menghilangkan outlier yang berada diluar quartile 1 dan quartile tiga dengan jarak 1.5 kali dari selisih quartile tiga dan quartile satu, sehingga menghasilkan dataset akhir gabungan sejumlah 74639 baris seperti ditunjukkan pada tabel 2.
+
+(Tabel 2. Dataset Gabungan Dikurangi Outlier Rating)
+| # | Column    | Non-Null Count | Dtype   |
+|---|-----------|----------------|---------|
+| 1 | movieId   | 74639 non-null | int64   |
+| 2 | title     | 74639 non-null | object  |
+| 3 | genres    | 74639 non-null | object  |
+| 4 | userId    | 74639 non-null | int64   |
+| 5 | rating    | 74639 non-null | float64 |
+| 6 | timestamp | 74639 non-null | int64   |
 
 ## Data Preparation
 Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
