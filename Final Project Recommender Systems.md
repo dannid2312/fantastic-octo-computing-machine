@@ -161,13 +161,11 @@ Tahapan dalam melakukan model hybrid kurang lebih sama dengan model CF di atas, 
 ## Evaluation
 Root Mean Square Error (RMSE) adalah salah satu metrik evaluasi yang umum digunakan untuk mengukur tingkat kesalahan prediksi dalam konteks sistem rekomendasi. Metrik ini mengukur akurasi dari prediksi yang dihasilkan oleh sistem terhadap nilai sebenarnya yang diberikan oleh pengguna. Nilai RMSE dihitung dari selisih antara nilai sebenarnya dan nilai prediksi untuk setiap item dalam dataset, kemudian melakukan kuadrat terhadap masing-masing selisih. Nilai RMSE adalah akar dari rata-rata kuadrat selisih tersebut.
 
-```math
-RMSE = sqrt((1/N) * sum((r_i - \hat{r}_i)^2))
+$$RMSE = sqrt((1/N) * sum((r_i - \hat{r}_i)^2))$$
 
 - N adalah jumlah total prediksi.
-- r_i adalah rating yang sebenarnya oleh pengguna untuk item ke-i
-- \hat{r}_i adalah rating yang diprediksi oleh model untuk item ke-i
-```
+- $$r_i$$ adalah rating yang sebenarnya oleh pengguna untuk item ke-i
+- $$\hat{r}_i$$ adalah rating yang diprediksi oleh model untuk item ke-i
 
 RMSE memberikan gambaran tentang seberapa dekat prediksi sistem dengan nilai sebenarnya. Semakin rendah nilai RMSE, semakin baik kinerja sistem dalam memprediksi preferensi pengguna. Nilai RMSE yang lebih rendah menunjukkan bahwa sistem memberikan prediksi yang lebih akurat dan dekat dengan nilai sebenarnya, sementara nilai RMSE yang lebih tinggi menunjukkan adanya kesalahan prediksi yang lebih besar. Oleh karena itu, RMSE adalah salah satu metrik yang penting dalam mengevaluasi kinerja dan akurasi dari sistem rekomendasi.
 
