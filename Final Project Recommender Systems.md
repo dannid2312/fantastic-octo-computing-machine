@@ -109,34 +109,74 @@ Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dil
 
 ## Modeling
 ### Model Development: Collaborative Filtering
-Pada tahap ini, model menghitung skor kecocokan antara pengguna dan film dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan film. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan film. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan film. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid. Permodelan dilakukan dengan membuat class RecommenderNet dengan keras Model class yang disesuaikan dengan movie recommendation system. Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. Berikut ini adalah contoh hasil rekomendasi dengan metode collaborative filtering:
 
-![collaborative](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/141d6554-aec0-4e25-bef0-164a20d8eecc)
+Metode Collaborative filtering (CF) adalah teknik yang digunakan dalam sistem rekomendasi untuk memprediksi preferensi pengguna berdasarkan rating dan interaksi pengguna lain. CF didasarkan pada asumsi bahwa pengguna dengan preferensi yang sama di masa lalu kemungkinan besar akan memiliki preferensi yang sama di masa depan. Oleh sebab itu, sistem CF digunakan dalam memberikan rekomendasi film yang cocok berdasarkan rating yang diberikan pengguna sebelumnya.
 
-### Model Development: Content Based Filtering
-Dalam membuat model content based filtering, dataset yang digunakan akan berfokus pada file movies.csv. Langkah pertama yang dilakukan adalah melakukan ekstraksi fitur dari kolom genres yang akan digunakan untuk mengukur derajat kesamaan antar film satu dengan film lainnya dengan menggunakan fungsi tfidfvectorizer() dari library sklearn. Dari tahapan tersebut, genre yang diawal berjumlah 951 variasi menjadi hanya 20 variasi genre yang terdiri dari 'action', 'adventure', 'animation', 'children', 'comedy', 'crime', 'documentary', 'drama', 'fantasy', 'filmnoir', 'horror', 'imax', 'musical', 'mystery', 'none', 'romance', 'scifi', 'thriller', 'war', dan 'western'.
+Tahapan dalam metode CF adalah dimulai dengan menghitung skor kecocokan antara pengguna dan film dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan film. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan film. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan film. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid. Permodelan dilakukan dengan membuat class RecommenderNet dengan keras Model class yang disesuaikan dengan movie recommendation system. Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. Berikut ini adalah contoh hasil rekomendasi dengan metode collaborative filtering:
 
-Langkah selanjutnya adalah mengubah vektor yang dihasilkan dari tfidf menjadi ke dalam bentuk matriks dengan melakukan fit dan transformasi, serta fungsi todense(). Matriks yang dihasilkan akan menunjukkan korelasi antara film dengan genre filmnya. Kemudian, menghitung derajat kesamaan antara satu film dengan film lainnya untuk menghasilkan kandidat film yang akan direkomendasikan berdasarkan kesamaan genre filmnya dengan menggunakan fungsi cosine_similarity dari library sklearn. Sehingga didapatkan hasil akhir sebagai berikut:
+```
+Showing recommendations for users: 177
+===========================
+Movie with high ratings from user
+--------------------------------
+Beauty and the Beast (1991) : Animation Children Fantasy Musical Romance IMAX
+Apartment, The (1960) : Comedy Drama Romance
+Graduate, The (1967) : Comedy Drama Romance
+Harry Potter and the Sorcerer's Stone (a.k.a. Harry Potter and the Philosopher's Stone) (2001) : Adventure Children Fantasy
+Adam's Rib (1949) : Comedy Romance
+--------------------------------
+Top 10 movie recommendation
+--------------------------------
+Crumb (1994) : Documentary
+Three Colors: Red (Trois couleurs: Rouge) (1994) : Drama
+In the Name of the Father (1993) : Drama
+His Girl Friday (1940) : Comedy Romance
+Great Escape, The (1963) : Action Adventure Drama War
+Batman: Mask of the Phantasm (1993) : Animation Children
+Kelly's Heroes (1970) : Action Comedy War
+You Can Count on Me (2000) : Drama Romance
+Dogville (2003) : Drama Mystery Thriller
+Blind Swordsman: Zatoichi, The (Zatôichi) (2003) : Action Comedy Crime Drama
+```
 
-![similarity](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/358649c0-0c7c-43c1-8135-a59fe22daa4c)
+### Model Development: Hybrid Model
+Hybrid model adalah menggabungkan antara metode Collaborative Filtering (CF) dengan Content Based Filtering (CBF), dimana model akan merekomendasikan film tidak hanya dari rating yang diberikan pengguna sebelumnya, namun juga mempertimbangkan fitur yang ada dalam film tersebut. Fitur yang dimaksud dan digunakan dalam model hybrid pada project ini adalah fitur genre. Dimana fitur genre dimasukkan sebagai input dalam melakukan permodelan.
 
-Berikut ini adalah contoh hasil rekomendasi dengan metode content based filtering:
+Tahapan dalam melakukan model hybrid kurang lebih sama dengan model CF di atas, namun terdapat input tambahan berupa fitur genre yang ditransformasi dengan menggunakan fungsi statement transformer. Fungsi tersebut merubah genre film menjadi matriks yang terdiri dari angka yang menunjukkan sebaran genre tertentu dalam dataset. Untuk tujuan perbandingan, model hybrid juga menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. Berikut ini adalah contoh hasil rekomendasi dengan hybrid model:
 
-![content1](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/dc974993-5366-4b4b-a80e-1a953f1af0aa)
-![content2](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/aa417abe-6529-4d07-91a4-5898856da2db)
-
-### Collaborative Filtering vs Content Based Filtering
-Berdasarkan hasil rekomendasi yang dihasilkan dari metode collaborative filtering dan content based filtering, cukup jelas terlihat bahwa hasil rekomendasi yang diberikan oleh collaborative filtering lebih bervariasi dibandingkan dengan content based filtering yang terpaku pada genre-genre tertentu. Hal tersebut memberikan keuntungan untuk penyedia jasa streaming agar film-film yang direkomendasikan lebih bervariasi sehingga kedepannya bisa lebih banyak film yang diexplorasi oleh pengguna, begitupun sebaliknya pengguna mendapatkan variasi film yang lebih menarik dan tidak mudah bosan karena menonton film yang serupa terus menerus.
-
-Secara umum, metode collaborative filtering memberikan keuntungan berupa rekomendasi lintas domain, yang berarti dapat digunakan untuk merekomendasikan item dari berbagai kategori atau jenis karena tidak hanya bergantung pada preferensi pengguna sendiri. Collaborative filtering juga dianggap  dapat memberikan rekomendasi yang lebih akurat dan dapat memberikan rekomendasi untuk pengguna baru karena mempertimbangkan preferensi pengguna lain. Namun kekurangan dari collaborative filtering adalah cenderung memberikan rekomendasi yang populer saja sehingga mengabaikan preferensi individu yang unik. Selain itu, collaborative filtering juga sangat bergantung pada data interaksi antara user dan item, sebagai contoh dalam proyek ini adalah rating film, sehingga metode ini akan sulit diimplementasikan bila data masih minim.
-
-Sedangkan untuk metode content based filtering, secara umum memiliki keuntungan berupa personalisasi yang kuat karena rekomendasi didasarkan pada preferensi individual pengguna dan tidak terlalu dipengaruhi oleh popularitas item karena rekomendasi didasarkan pada kesamaan fitur antara item yang sudah disukai pengguna dan item yang akan direkomendasikan. Namun kekurangan dari metode ini adalah adanya overfitting dimana rekomendasi yang diberikan terlalu mirip dengan item yang telah disukai pengguna sebelumnya dan mungkin gagal untuk mengungkapkan item baru atau mengeksplorasi minat yang berbeda dari pengguna.
+```
+--------------------------------
+Top 10 movie recommendation
+--------------------------------
+Billy Madison (1995) : Comedy
+Terminator, The (1984) : Action SciFi Thriller
+Dreamlife of Angels, The (Vie rêvée des anges, La) (1998) : Drama
+Universal Soldier: The Return (1999) : Action SciFi
+Bats (1999) : Horror Thriller
+Hurricane, The (1999) : Drama
+Death Wish (1974) : Action Crime Drama
+Heist (2001) : Crime Drama
+Triplets of Belleville, The (Les triplettes de Belleville) (2003) : Animation Comedy Fantasy
+Dernier Combat, Le (Last Battle, The) (1983) : Drama SciFi
+```
 
 ## Evaluation
 Root Mean Square Error (RMSE) adalah salah satu metrik evaluasi yang umum digunakan untuk mengukur tingkat kesalahan prediksi dalam konteks sistem rekomendasi. Metrik ini mengukur akurasi dari prediksi yang dihasilkan oleh sistem terhadap nilai sebenarnya yang diberikan oleh pengguna. Nilai RMSE dihitung dari selisih antara nilai sebenarnya dan nilai prediksi untuk setiap item dalam dataset, kemudian melakukan kuadrat terhadap masing-masing selisih. Nilai RMSE adalah akar dari rata-rata kuadrat selisih tersebut.
 
 RMSE memberikan gambaran tentang seberapa dekat prediksi sistem dengan nilai sebenarnya. Semakin rendah nilai RMSE, semakin baik kinerja sistem dalam memprediksi preferensi pengguna. Nilai RMSE yang lebih rendah menunjukkan bahwa sistem memberikan prediksi yang lebih akurat dan dekat dengan nilai sebenarnya, sementara nilai RMSE yang lebih tinggi menunjukkan adanya kesalahan prediksi yang lebih besar. Oleh karena itu, RMSE adalah salah satu metrik yang penting dalam mengevaluasi kinerja dan akurasi dari sistem rekomendasi.
 
-Dari hasil permodelan dengan metode collaborative filtering, didapatkan hasil yang sangat memuaskan dengan nilai RMSE kurang dari 0.2 pada dataset train maupun dataset validation. Nilai tersebut menyatakan bahwa data yang digunakan memberikan hasil rekomendasi yang akurat dan terpersonalisasi dengan baik terhadap pengguna sehingga menghasilkan rekomendasi yang dianggap relevan.
+Berdasarkan gambar 2 yang menunjukkan hasil matrik RMSE pada metode Collaborative Filtering, didapatkan bahwa nilai rmse pada dataset train konvergen pada sekitar angka 0.203, sedangkan nilai rmse pada dataset test / validation konvergen pada sekitar 0.22, yang mana nilai tersebut tercapai pada sekitar epoch ke 9. 
 
-![metrik](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/4d287b2f-597f-48d7-b25c-1c5bbdccb6de)
+![cf-rmse](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/347c7d00-2436-4ae7-8dfb-b7f588a9087a)
+(Gambar 2. Metrik RMSE Model Collaborative Filtering)
+
+Berdasarkan gambar 3 yang menunjukkan hasil matrik EMSE pada metode Hybrid, didapatkan bahwa nilai rmse pada dataset train dan dataset test / validation konvergen dinilai 1.55, yang mana nilai tersebut tercapai pada epoch ke 3.
+
+![hybrid-rmse](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/eb0bde5d-cc67-4d54-a4f7-8ec68feec352)
+(Gambar 3. Metrik RMSE Model Hybrid)
+
+## Kesimpulan
+
+Berdasarkan hasil metrik evaluasi RMSE pada kedua model, didapatkan bahwa model Collaborative Filtering menghasilkan data yang lebih akurat karena nilai RMSE yang jauh lebih kecil sebesar 0.2 dibandingkan dengan nilai RMSE model Hybrid sebesar 1.55. Hal tersebut bisa disebabkan oleh fitur genre yang ditambahkan pada model Hybrid justru membuat prediksi model tidak lebih baik dibandingkan model Collaborative Filtering yang memang fokus pada kolom user dan rating dalam permodelan.
+
+Berdasarkan hasil top 10 rekomendasi film yang dihasilkan oleh model Collaborative Filtering dan model Hybrid pada sampel user 117 menunjukkan bahwa user menyukai film Drama dengan variasi sentuhan genre lain seperti Comedy, Thriller, dan Action. Selain itu, bila ditinjau lebih detail, bahwa hasil dari masing-masing model memberikan top 10 rekomendasi yang seluruhnya berbeda, hal itu dapat mendukung fakta terkait perbedaan nilai RMSE antara kedua model yang juga cukup signifikan, sehingga memberikan hasil rekomendasi yang berbeda, meskipun masih masuk ke dalam kelompok genre yang sama.
