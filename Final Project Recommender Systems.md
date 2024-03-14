@@ -22,21 +22,21 @@ Sistem rekomendasi film merupakan alat penting bagi bisnis di industri hiburan. 
 
 Berdasarkan kondisi yang telah diuraikan sebelumnya, sistem rekomendasi film dikembangkan untuk menjawab permasalahan sebagai berikut:
 - Diperlukan data yang lengkap, akurat, dan/atau tidak mengandung bias tentang rating film dari banyak penonton atau pelanggan.
-- Diperlukan sistem rekomendasi film yang dapat memberikan rekomendasi kepada pengguna baru yang belum memberikan banyak data tentang preferensinya.
-- Diperlukan sistem rekomendasi film yang dapat memberikan kesempatan rekomendasi kepada film serupa yang belum pernah mendapatkan rating.
+- Diperlukan sistem rekomendasi film yang dapat memberikan rekomendasi kepada pengguna lama maupun pengguna baru yang belum memberikan banyak data tentang preferensinya berdasarkan rating yang diberikan oleh pengguna.
+- Diperlukan sistem rekomendasi film yang tidak hanya memperhitungkan rating namun juga fitur yang ada di dalam filmnya, contohnya genre.
 
 ### Goals
 
 Untuk menjawab permasalahan tersebut, sistem rekomendasi film dikembangkan dengan tujuan atau goals sebagai berikut:
 - Menggunakan data rating dari film lama untuk mendapatkan data yang lengkap, serta melakukan data preparation yang baik untuk menghilangkan data yang tidak berkualitas atau data yang bias.
 - Menggunakan metode collaborative filtering untuk memberikan rekomendasi film baik kepada pengguna baru maupun pengguna lama yang telah terpersonalisasi.
-- Menggunakan metode content based filtering untuk memberikan rekomendasi film berdasarkan genre film yang sudah pernah ditonton sebelumnya.
+- Menggunakan metode hybrid content based filtering dan collaborative filtering untuk memberikan rekomendasi film berdasarkan rating dan genre filmnya.
 
 ### Solution Statement
 Untuk mencapai masing-masing tujuan atau goals tersebut, dilakukan tahapan sebagai berikut:
 - Menggunakan database film yang memiliki data rating yang lengkap dan melimpah untuk kemudian dilakukan univariate analysis, preprocessing, dan data preparation berupa encoding dan standardization untuk mendapatkan data yang berkualitas.
 - Melakukan permodelan dengan metode collaborative filtering untuk memproses model pengguna dan rating filmnya dengan menggunakan teknik embedding dan perkalian dot product untuk memberikan rekomendasi film baik terhadap pengguna baru maupun pengguna lama berdasarkan skor kecocokan yang dihitung dengan fungsi aktivasi sigmoid.
-- Melakukan permodelan dengan motede content based filtering untuk memproses model film dan genre filmnya dengan bantuan fungsi tfidfvectorizer dan cosine_similarity dari library sklearn untuk memberikan rekomendasi film berdasarkan kemiripannya dengan film yang sudah pernah ditonton sebelumnya.
+- Melakukan permodelan dengan metode yang menggabungkan collaborative filtering dengan content based filtering untuk memproses model film dan genre filmnya dengan bantuan fungsi sentence transformer dan matriks factorization untuk memberikan rekomendasi film berdasarkan rating film dan kemiripannya dengan film yang sudah pernah ditonton sebelumnya .
 
 ## Data Understanding
 Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan. Hasil akhir dari penggabungan dataset terdiri dari 100836 baris dan 6 kolom, serta tidak terdapat missing values yang ditunjukkan pada Tabel 1.
@@ -74,7 +74,16 @@ Jumlah nilai minimum rating 5.0
 ![box-rating](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/3fe38a57-94ab-4451-9a0b-21b5904b5ffc)
 (Gambar 1. Boxplot Rating)
 
-Berdasarkan gambar 1 berupa boxplot sebaran nilai rating yang diberikan pengguna, nilai yang paling banyak diberikan adalah antara 3.0 dan 4.0, serta terdapat nilai outlier yaitu 0.5 dan 1, sehingga diperlukan treatment terhadap outlier tersebut. Outlier dihilangkan dengan menggunakan "the 1.5 IQR rule" yaitu menghilangkan outlier yang berada diluar quartile 1 dan quartile tiga dengan jarak 1.5 kali dari selisih quartile tiga dan quartile satu, sehingga menghasilkan dataset akhir gabungan sejumlah 74639 baris seperti ditunjukkan pada tabel 2.
+Berdasarkan gambar 1 berupa boxplot sebaran nilai rating yang diberikan pengguna, nilai yang paling banyak diberikan adalah antara 3.0 dan 4.0, serta terdapat nilai outlier yaitu 0.5 dan 1, sehingga diperlukan treatment terhadap outlier tersebut. Outlier dihilangkan dengan menggunakan "the 1.5 IQR rule" yaitu menghilangkan outlier yang berada diluar quartile 1 dan quartile tiga dengan jarak 1.5 kali dari selisih quartile tiga dan quartile satu, sehingga menghasilkan dataset akhir gabungan sejumlah 74639 baris seperti ditunjukkan pada tabel 2. Dengan deskripsi dataset sebagai berikut:
+
+```
+Jumlah film berdasarkan movieId: 5284
+Jumlah film berdasarkan title: 5284
+Jumlah genre berdasarkan genres: 585
+Jumlah user berdasarkan userId: 610
+Jumlah nilai minimum rating 1.5
+Jumlah nilai minimum rating 5.0
+```
 
 (Tabel 2. Dataset Gabungan Dikurangi Outlier Rating)
 | # | Column    | Non-Null Count | Dtype   |
@@ -88,11 +97,12 @@ Berdasarkan gambar 1 berupa boxplot sebaran nilai rating yang diberikan pengguna
 
 ## Data Preparation
 Pada bagian ini akan dilakukan tiga tahap persiapan data, yaitu:
+
 ### Encoding fitur kategori
 Encoding dilakukan terhadap variabel userId dan movieId. Meskipun kedua variabel tersebut sudah memiliki nilai integer, namun encoding tetap dilakukan untuk mempermudah model dalam melakukan pelatihan sehingga konvergensi lebih mudah dicapai. Encoding dilakukan secara manual dengan menggunakan fungsi enumerate().
 
 ### Standarisasi
-Algoritma machine learning memiliki performa lebih baik dan konvergen lebih cepat ketika dimodelkan pada data dengan skala relatif sama atau mendekati distribusi normal. Proses scaling dan standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. Pada proyek ini standarisasi yang dilakukan adalah dengan menggunakan min max scaling untuk mengubah variabel rating dari yang semula memiliki skala [0,5] menjadi skala [0,1].
+Algoritma machine learning memiliki performa lebih baik dan konvergen lebih cepat ketika dimodelkan pada data dengan skala relatif sama atau mendekati distribusi normal. Proses scaling dan standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. Pada proyek ini standarisasi yang dilakukan adalah dengan menggunakan min max scaling untuk mengubah variabel rating dari yang semula memiliki skala [1.5,5] menjadi skala [0,1].
 
 ### Pembagian dataset dengan fungsi train_test_split dari library sklearn
 Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dilatih (train) pada model dan dataset untuk menguji (test) performa model. Dalam project ini akan digunakan proporsi pembagian sebesar 80:20 secara manual dengan melakukan split terhadap dataframe yang sebelumnya sudah diacak.
