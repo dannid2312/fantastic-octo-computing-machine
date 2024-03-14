@@ -124,6 +124,7 @@ Tahapan dalam metode CF adalah dimulai dengan menghitung skor kecocokan antara p
 
 
 (Tabel 4. Top 10 Rekomendasi Metode Collaborative Filtering)
+
 | Title (Year)                                        | Genre                       |
 |-----------------------------------------------------|-----------------------------|
 | Crumb (1994)                                        |  Documentary                |
@@ -142,21 +143,20 @@ Hybrid model adalah menggabungkan antara metode Collaborative Filtering (CF) den
 
 Tahapan dalam melakukan model hybrid kurang lebih sama dengan model CF di atas, namun terdapat input tambahan berupa fitur genre yang ditransformasi dengan menggunakan fungsi statement transformer. Fungsi tersebut merubah genre film menjadi matriks yang terdiri dari angka yang menunjukkan sebaran genre tertentu dalam dataset. Untuk tujuan perbandingan, model hybrid juga menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. Berikut ini adalah contoh hasil rekomendasi dengan hybrid model:
 
-```
---------------------------------
-Top 10 movie recommendation
---------------------------------
-Billy Madison (1995) : Comedy
-Terminator, The (1984) : Action SciFi Thriller
-Dreamlife of Angels, The (Vie rêvée des anges, La) (1998) : Drama
-Universal Soldier: The Return (1999) : Action SciFi
-Bats (1999) : Horror Thriller
-Hurricane, The (1999) : Drama
-Death Wish (1974) : Action Crime Drama
-Heist (2001) : Crime Drama
-Triplets of Belleville, The (Les triplettes de Belleville) (2003) : Animation Comedy Fantasy
-Dernier Combat, Le (Last Battle, The) (1983) : Drama SciFi
-```
+(Tabel 5. Top 10 Rekomendasi Metode Hybrid)
+
+| Title (Year)                                                         | Genre                     |
+|----------------------------------------------------------------------|---------------------------|
+| Billy Madison (1995)                                                 |  Comedy                   |
+| Terminator, The (1984)                                               |  Action SciFi Thriller    |
+| Dreamlife of Angels, The (Vie rêvée des   anges, La) (1998)          |  Drama                    |
+| Universal Soldier: The Return (1999)                                 |  Action SciFi             |
+| Bats (1999)                                                          |  Horror Thriller          |
+| Hurricane, The (1999)                                                |  Drama                    |
+| Death Wish (1974)                                                    |  Action Crime Drama       |
+| Heist (2001)                                                         |  Crime Drama              |
+| Triplets of Belleville, The (Les   triplettes de Belleville) (2003)  |  Animation Comedy Fantasy |
+| Dernier Combat, Le (Last Battle, The)   (1983)                       |  Drama SciFi              |
 
 ## Evaluation
 Root Mean Square Error (RMSE) adalah salah satu metrik evaluasi yang umum digunakan untuk mengukur tingkat kesalahan prediksi dalam konteks sistem rekomendasi. Metrik ini mengukur akurasi dari prediksi yang dihasilkan oleh sistem terhadap nilai sebenarnya yang diberikan oleh pengguna. Nilai RMSE dihitung dari selisih antara nilai sebenarnya dan nilai prediksi untuk setiap item dalam dataset, kemudian melakukan kuadrat terhadap masing-masing selisih. Nilai RMSE adalah akar dari rata-rata kuadrat selisih tersebut.
