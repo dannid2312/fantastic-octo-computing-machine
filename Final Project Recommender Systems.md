@@ -42,6 +42,7 @@ Untuk mencapai masing-masing tujuan atau goals tersebut, dilakukan tahapan sebag
 Data yang digunakan pada proyek kali ini adalah Movies & Ratings for Recommendation System dataset yang diunduh dari website [Kaggle](https://www.kaggle.com/datasets/nicoletacilibiu/movies-and-ratings-for-recommendation-system/code). Dataset ini terdiri dari dua file csv berupa movies.csv dan ratings.csv. File movies.csv merupakan dataset tentang database film yang memiliki 9742 baris yang terdiri dari tiga kolom yaitu movieId, title, dan genres. File ratings.csv merupakan dataset tentang rating film yang memiliki 100836 baris yang terdiri dari empat kolom, yaitu userId, movieId, rating, dan timestamp. Dataset masih perlu dilakukan beberapa penyesuaian dalam tahap data preparation untuk menghasilkan dataset yang berkualitas. Kedua dataset yang tersedia kemudian digabungkan menjadi satu dataset dengan menggunakan movieId sebagai acuan penggabungan. Hasil akhir dari penggabungan dataset terdiri dari 100836 baris dan 6 kolom, serta tidak terdapat missing values yang ditunjukkan pada Tabel 1.
 
 (Tabel 1. Dataset Gabungan)
+
 | # | Column    | Non-Null Count  | Dtype   |
 |---|-----------|-----------------|---------|
 | 1 | movieId   | 100836 non-null | int64   |
@@ -72,6 +73,7 @@ Jumlah nilai minimum rating 5.0
 ```
 
 ![box-rating](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/3fe38a57-94ab-4451-9a0b-21b5904b5ffc)
+
 (Gambar 1. Boxplot Rating)
 
 Berdasarkan gambar 1 berupa boxplot sebaran nilai rating yang diberikan pengguna, nilai yang paling banyak diberikan adalah antara 3.0 dan 4.0, serta terdapat nilai outlier yaitu 0.5 dan 1, sehingga diperlukan treatment terhadap outlier tersebut. Outlier dihilangkan dengan menggunakan "the 1.5 IQR rule" yaitu menghilangkan outlier yang berada diluar quartile 1 dan quartile tiga dengan jarak 1.5 kali dari selisih quartile tiga dan quartile satu, sehingga menghasilkan dataset akhir gabungan sejumlah 74639 baris seperti ditunjukkan pada tabel 2. Dengan deskripsi dataset sebagai berikut:
@@ -86,6 +88,7 @@ Jumlah nilai minimum rating 5.0
 ```
 
 (Tabel 2. Dataset Gabungan Dikurangi Outlier Rating)
+
 | # | Column    | Non-Null Count | Dtype   |
 |---|-----------|----------------|---------|
 | 1 | movieId   | 74639 non-null | int64   |
@@ -168,11 +171,13 @@ RMSE memberikan gambaran tentang seberapa dekat prediksi sistem dengan nilai seb
 Berdasarkan gambar 2 yang menunjukkan hasil matrik RMSE pada metode Collaborative Filtering, didapatkan bahwa nilai rmse pada dataset train konvergen pada sekitar angka 0.203, sedangkan nilai rmse pada dataset test / validation konvergen pada sekitar 0.22, yang mana nilai tersebut tercapai pada sekitar epoch ke 9. 
 
 ![cf-rmse](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/347c7d00-2436-4ae7-8dfb-b7f588a9087a)
+
 (Gambar 2. Metrik RMSE Model Collaborative Filtering)
 
 Berdasarkan gambar 3 yang menunjukkan hasil matrik EMSE pada metode Hybrid, didapatkan bahwa nilai rmse pada dataset train dan dataset test / validation konvergen dinilai 1.55, yang mana nilai tersebut tercapai pada epoch ke 3.
 
 ![hybrid-rmse](https://github.com/dannid2312/fantastic-octo-computing-machine/assets/123451351/eb0bde5d-cc67-4d54-a4f7-8ec68feec352)
+
 (Gambar 3. Metrik RMSE Model Hybrid)
 
 ## Kesimpulan
