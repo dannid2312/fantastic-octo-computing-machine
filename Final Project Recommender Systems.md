@@ -9,11 +9,6 @@ Proyek movie recommendation system memiliki manfaat yang sangat besar, yaitu:
 - Meningkatkan efisiensi pencarian film: Sistem rekomendasi dapat membantu pengguna menghemat waktu dan tenaga dalam mencari film yang ingin ditonton. Hal ini dapat meningkatkan efisiensi dan produktivitas pengguna.
 - Meningkatkan pendapatan platform: Sistem rekomendasi dapat membantu platform streaming dan situs web rekomendasi film meningkatkan pendapatan mereka dengan mendorong pengguna untuk menonton lebih banyak film.
 
-### Referensi
-[1] Soldo, L., & Schagerl, C. (2023). Impact of the Covid-19 Pandemic on Netflix. MAP Education and Humanities, 3(1), 75–82. [https://doi.org/10.53880/2744-2373.2023.3.1.75](https://mapub.org/ojs/index.php/mapeh/article/view/72)
-
-[2] Carlos A. Gomez-Uribe and Neil Hunt. 2015. The Netflix recommender system: Algorithms, business value, and innovation. ACM Trans. Manage. Inf. Syst. 6, 4, Article 13 (December 2015), 19 pages. DOI: [http://dx.doi.org/10.1145/2843948](https://dl.acm.org/doi/pdf/10.1145/2843948)
-
 ## Business Understanding
 
 Sistem rekomendasi film merupakan alat penting bagi bisnis di industri hiburan. Sistem ini memberikan manfaat bagi pengguna dengan menghemat waktu dan tenaga dalam mencari film yang sesuai selera, serta membantu mereka menemukan film baru yang menarik. Bagi bisnis, sistem ini meningkatkan engagement dan konversi pengguna, serta membantu monetisasi platform dengan lebih efektif. Meskipun terdapat beberapa tantangan, namun seiring dengan perkembangan teknologi AI dan machine learning memungkinkan sistem ini terus berkembang dan menjadi lebih personal dan akurat. Dengan memanfaatkan peluang dan mengatasi tantangan tersebut, sistem rekomendasi film akan terus memainkan peran penting dalam industri hiburan.
@@ -115,32 +110,32 @@ Sebelum melakukan permodelan, perlu dilakukan pembagian antara dataset untuk dil
 
 Metode Collaborative filtering (CF) adalah teknik yang digunakan dalam sistem rekomendasi untuk memprediksi preferensi pengguna berdasarkan rating dan interaksi pengguna lain. CF didasarkan pada asumsi bahwa pengguna dengan preferensi yang sama di masa lalu kemungkinan besar akan memiliki preferensi yang sama di masa depan. Oleh sebab itu, sistem CF digunakan dalam memberikan rekomendasi film yang cocok berdasarkan rating yang diberikan pengguna sebelumnya.
 
-Tahapan dalam metode CF adalah dimulai dengan menghitung skor kecocokan antara pengguna dan film dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan film. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan film. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan film. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid. Permodelan dilakukan dengan membuat class RecommenderNet dengan keras Model class yang disesuaikan dengan movie recommendation system. Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. Berikut ini adalah contoh hasil rekomendasi dengan metode collaborative filtering:
+Tahapan dalam metode CF adalah dimulai dengan menghitung skor kecocokan antara pengguna dan film dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data user dan film. Selanjutnya, lakukan operasi perkalian dot product antara embedding user dan film. Selain itu, kita juga dapat menambahkan bias untuk setiap user dan film. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi sigmoid. Permodelan dilakukan dengan membuat class RecommenderNet dengan keras Model class yang disesuaikan dengan movie recommendation system. Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. Berikut ini adalah contoh hasil rekomendasi dengan metode collaborative filtering untuk users 177:
 
-```
-Showing recommendations for users: 177
-===========================
-Movie with high ratings from user
---------------------------------
-Beauty and the Beast (1991) : Animation Children Fantasy Musical Romance IMAX
-Apartment, The (1960) : Comedy Drama Romance
-Graduate, The (1967) : Comedy Drama Romance
-Harry Potter and the Sorcerer's Stone (a.k.a. Harry Potter and the Philosopher's Stone) (2001) : Adventure Children Fantasy
-Adam's Rib (1949) : Comedy Romance
---------------------------------
-Top 10 movie recommendation
---------------------------------
-Crumb (1994) : Documentary
-Three Colors: Red (Trois couleurs: Rouge) (1994) : Drama
-In the Name of the Father (1993) : Drama
-His Girl Friday (1940) : Comedy Romance
-Great Escape, The (1963) : Action Adventure Drama War
-Batman: Mask of the Phantasm (1993) : Animation Children
-Kelly's Heroes (1970) : Action Comedy War
-You Can Count on Me (2000) : Drama Romance
-Dogville (2003) : Drama Mystery Thriller
-Blind Swordsman: Zatoichi, The (Zatôichi) (2003) : Action Comedy Crime Drama
-```
+(Tabel 3. Movie with high ratings from user)
+
+| Title (Year)                                                                                   | Genre                                           |
+|------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| Beauty and the Beast (1991)                                                                    | Animation Children Fantasy Musical Romance IMAX |
+| Apartment, The (1960)                                                                          | Comedy Drama Romance                            |
+| Graduate, The (1967)                                                                           | Comedy Drama Romance                            |
+| Harry Potter and the Sorcerer's Stone (a.k.a. Harry Potter and the Philosopher's Stone) (2001) | Adventure Children Fantasy                      |
+| Adam's Rib (1949)                                                                              | Comedy Romance                                  |
+
+
+(Tabel 4. Top 10 Rekomendasi Metode Collaborative Filtering)
+| Title (Year)                                        | Genre                       |
+|-----------------------------------------------------|-----------------------------|
+| Crumb (1994)                                        |  Documentary                |
+| Three Colors: Red (Trois couleurs: Rouge)   (1994)  |  Drama                      |
+| In the Name of the Father (1993)                    |  Drama                      |
+| His Girl Friday (1940)                              |  Comedy Romance             |
+| Great Escape, The (1963)                            |  Action Adventure Drama War |
+| Batman: Mask of the Phantasm (1993)                 |  Animation Children         |
+| Kelly's Heroes (1970)                               |  Action Comedy War          |
+| You Can Count on Me (2000)                          |  Drama Romance              |
+| Dogville (2003)                                     |  Drama Mystery Thriller     |
+| Blind Swordsman: Zatoichi, The (Zatôichi)   (2003)  |  Action Comedy Crime Drama  |
 
 ### Model Development: Hybrid Model
 Hybrid model adalah menggabungkan antara metode Collaborative Filtering (CF) dengan Content Based Filtering (CBF), dimana model akan merekomendasikan film tidak hanya dari rating yang diberikan pengguna sebelumnya, namun juga mempertimbangkan fitur yang ada dalam film tersebut. Fitur yang dimaksud dan digunakan dalam model hybrid pada project ini adalah fitur genre. Dimana fitur genre dimasukkan sebagai input dalam melakukan permodelan.
@@ -187,3 +182,8 @@ Berdasarkan hasil metrik evaluasi RMSE pada kedua model, didapatkan bahwa model 
 Berdasarkan hasil top 10 rekomendasi film yang dihasilkan oleh model Collaborative Filtering dan model Hybrid pada sampel user 117 menunjukkan bahwa user menyukai film Drama dengan variasi sentuhan genre lain seperti Comedy, Thriller, dan Action. Selain itu, bila ditinjau lebih detail, bahwa hasil dari masing-masing model memberikan top 10 rekomendasi yang seluruhnya berbeda, hal itu dapat mendukung fakta terkait perbedaan nilai RMSE antara kedua model yang juga cukup signifikan, sehingga memberikan hasil rekomendasi yang berbeda, meskipun masih masuk ke dalam kelompok genre yang sama.
 
 Pemberian rekomendasi yang akurat dapat menguntungkan kedua pihak baik yaitu perusahaan platform streaming yang mendapatkan pelanggan yang setia dengan film-film yg direkomendasikan dan juga pelanggan yang dapat menikmati film-film yang disukai tanpa kesulitan dalam melakukan pencarian.
+
+## Referensi
+[1] Soldo, L., & Schagerl, C. (2023). Impact of the Covid-19 Pandemic on Netflix. MAP Education and Humanities, 3(1), 75–82. [https://doi.org/10.53880/2744-2373.2023.3.1.75](https://mapub.org/ojs/index.php/mapeh/article/view/72)
+
+[2] Carlos A. Gomez-Uribe and Neil Hunt. 2015. The Netflix recommender system: Algorithms, business value, and innovation. ACM Trans. Manage. Inf. Syst. 6, 4, Article 13 (December 2015), 19 pages. DOI: [http://dx.doi.org/10.1145/2843948](https://dl.acm.org/doi/pdf/10.1145/2843948)
